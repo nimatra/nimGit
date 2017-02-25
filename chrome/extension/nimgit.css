@@ -1,0 +1,28 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 550px;
+  height: 500px;
+  background: transparent
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  appearance: none;
+  font-smoothing: antialiased;
+}
+
+body {
+  background: transparent
+}
+
+button,
+input[type="checkbox"] {
+  outline: none;
+}
