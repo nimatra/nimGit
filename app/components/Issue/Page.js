@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { List, Divider } from 'material-ui';
+import { List, ListItem, Divider } from 'material-ui';
 import IssueItem from './Item';
 import {
     assignedIssueListSelector,
@@ -73,14 +73,35 @@ class Page extends Component {
 
     return (
       <List>
-        { assignedItems }
+        <ListItem
+          primaryText="Assigned"
+          primaryTogglesNestedList
+          nestedItems={assignedItems}
+        />
         <Divider />
-        { createdItems }
+        <ListItem
+          primaryText="Created"
+          primaryTogglesNestedList
+          nestedItems={createdItems}
+        />
         <Divider />
-        { mentionedItems }
+        <ListItem
+          primaryText="Mentioned"
+          primaryTogglesNestedList
+          nestedItems={mentionedItems}
+        />
         <Divider />
-        { subscribedItems }
+        <ListItem
+          primaryText="Subscribed"
+          primaryTogglesNestedList
+          nestedItems={subscribedItems}
+        />
         <Divider />
+        <ListItem
+          primaryText="All"
+          primaryTogglesNestedList
+          nestedItems={allItems}
+        />
       </List>);
   }
 }
