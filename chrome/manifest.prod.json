@@ -1,10 +1,10 @@
 {
   "version": "0.0.0",
-  "name": "react-chrome-extension-example",
+  "name": "nimGit",
   "manifest_version": 2,
-  "description": "Example for react-chrome-extension-boilerplate",
+  "description": "Watch your GitHub Issues and Pull Requests",
   "browser_action": {
-    "default_title": "React Chrome Extension Example",
+    "default_title": "nimGit",
     "default_popup": "popup.html"
   },
   "icons": {
