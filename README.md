@@ -1,10 +1,10 @@
-# Github Extension for Chrome
+# Watch your GitHub Issues and Pull Requests From A Chrome Extension
 
 ## Installation
 
 ```bash
 # clone it
-$ git clone https://github.com/nimatra/githubExtension.git
+$ git clone https://github.com/nimatra/nimGit.git
 
 # Install dependencies
 $ npm install
