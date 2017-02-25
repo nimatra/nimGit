@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import { Tabs, Tab } from 'material-ui';
+import { Tabs, Tab, Avatar, FontIcon } from 'material-ui';
 import { connect } from 'react-redux';
-import { activeRepoSelector, tokenSelector } from '../selectors/settings';
+import { activeRepoSelector, tokenSelector, userSelector } from '../selectors/settings';
 import { activePageSelector } from '../selectors/navigation';
 import * as Pages from '../constants/Pages';
 
@@ -15,16 +15,16 @@ class Header extends Component {
     activePage: PropTypes.string,
     activeRepo: PropTypes.object,
     token: PropTypes.string,
+    user: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = { firstRun: true };
   }
-
   switchTo = function(page) {
     const { actions, activeRepo, token } = this.props;
-    if (activeRepo) {
+    if (activeRepo && activeRepo.owner) {
       actions.getPullRequests(activeRepo.name, activeRepo.owner.login, token);
       actions.getIssues(activeRepo.name, activeRepo.owner.login, token);
     }
@@ -32,7 +32,8 @@ class Header extends Component {
   }
 
   render() {
-    const { activePage } = this.props;
+    const { activePage, user } = this.props;
+    const iconSource = user && user.avatar_url ? user.avatar_url : 'http://www.flaticon.com/premium-icon/icons/svg/327/327924.svg';
     return (
       <div style={{ marginBottom: '8px' }}>
         <Tabs value={activePage} onChange={e => this.switchTo(e)} style={{ height: '30px' }}>
@@ -47,7 +48,7 @@ class Header extends Component {
             style={tabStyle}
           />
           <Tab
-            label="SETTINGS"
+            icon={<Avatar src={iconSource} size={30} />}
             value={Pages.SETTINGS}
             style={tabStyle}
           />
@@ -61,6 +62,7 @@ const mapStateToProps = state => ({
   activePage: activePageSelector(state),
   activeRepo: activeRepoSelector(state),
   token: tokenSelector(state),
+  user: userSelector(state),
 });
 
 const HeaderComponent = connect(

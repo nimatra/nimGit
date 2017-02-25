@@ -6,6 +6,9 @@ import { reposSelector, activeRepoSelector, usernameSelector, userSelector, toke
 import * as Pages from '../../constants/Pages';
 
 const errorMessage = 'Double-check this field';
+const style = {
+  margin: '15px',
+};
 
 class Settings extends Component {
   static propTypes = {
@@ -38,6 +41,8 @@ class Settings extends Component {
   saveHandler(e) {
     const { actions } = this.props;
     actions.validateSettings(this.state.token, this.state.username, this.state.repo, this.state.owner);
+    actions.getPullRequests(this.state.repo, this.state.owner, this.state.token);
+    actions.getIssues(this.state.repo, this.state.owner, this.state.token);
     actions.navigateTo(Pages.ISSUES);
     // const isUserValid = actions.getUser(this.state.token, this.state.username);
     // const isRepoValid = actions.getRepo(this.state.token, this.state.repo, this.state.owner);
@@ -104,12 +109,13 @@ class Settings extends Component {
     // }
 
     return (
-      <div>
+      <div style={style}>
         <TextField
           id="Token-Text-Field"
           floatingLabelText="Token"
           errorText={this.state.invalidToken}
           value={this.state.token}
+          type="password"
           onChange={e => this.tokenChangeHandler(e)}
         />
         <br />

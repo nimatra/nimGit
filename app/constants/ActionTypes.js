@@ -18,7 +18,7 @@ export const GET_ISSUES_ERROR = 'GET_ISSUES_ERROR';
 
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_USERNAME = 'SET_USERNAME';
-export const SET_USER = 'SET_USERNAME';
+export const SET_USER = 'SET_USER';
 export const ADD_REPO = 'ADD_REPO';
 export const SET_ACTIVE_REPO = 'SET_ACTIVE_REPO';
 export const SET_DARK_THEME = 'SET_DARK_THEME';
