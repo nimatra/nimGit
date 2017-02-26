@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0",
+  "version": "0.1.2",
   "name": "nimGit",
   "manifest_version": 2,
   "description": "Watch your GitHub Issues and Pull Requests",
@@ -19,5 +19,5 @@
     "page": "background.html"
   },
   "permissions": [ "contextMenus", "tabs", "storage", "https://github.com/*", "https://api.github.com/*" ],
-  "content_security_policy": "default-src 'self'; script-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;"
+  "content_security_policy": "default-src 'self'; script-src 'self' 'unsafe-eval'; connect-src https://api.github.com; style-src * 'unsafe-inline' 'self' blob: data: https:; img-src * 'self' data: https:;"
 }

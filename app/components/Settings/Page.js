@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
-import { TextField, FlatButton, RadioButtonGroup, RadioButton } from 'material-ui';
+import { TextField, FlatButton, RadioButtonGroup, RadioButton, RaisedButton, FontIcon } from 'material-ui';
 import { reposSelector, activeRepoSelector, usernameSelector, userSelector, tokenSelector } from '../../selectors/settings';
 import * as Pages from '../../constants/Pages';
 
@@ -37,6 +37,11 @@ class Settings extends Component {
       theme: false,
     };
   }
+
+
+  nimGitClick = () => {
+    chrome.tabs.create({ url: 'https://github.com/nimatra/nimGit' });
+  };
 
   saveHandler(e) {
     const { actions } = this.props;
@@ -112,10 +117,11 @@ class Settings extends Component {
       <div style={style}>
         <TextField
           id="Token-Text-Field"
-          floatingLabelText="Token"
+          floatingLabelText="Github 'Personal Access Token' with 'repo' permissions"
           errorText={this.state.invalidToken}
           value={this.state.token}
           type="password"
+          style={{ width: '80%' }}
           onChange={e => this.tokenChangeHandler(e)}
         />
         <br />
@@ -124,6 +130,7 @@ class Settings extends Component {
           floatingLabelText="Username"
           errorText={this.state.invalidUsername}
           value={this.state.username}
+          style={{ width: '80%' }}
           onChange={e => this.usernameChangeHandler(e)}
         />
         <br />
@@ -132,6 +139,7 @@ class Settings extends Component {
           floatingLabelText="Repository Owner"
           errorText={this.state.invalidOwner}
           value={this.state.owner}
+          style={{ width: '80%' }}
           onChange={e => this.ownerChangeHandler(e)}
         />
         <br />
@@ -140,11 +148,12 @@ class Settings extends Component {
           floatingLabelText="Repository Name"
           errorText={this.state.invalidRepo}
           value={this.state.repo}
+          style={{ width: '80%' }}
           onChange={e => this.repoChangeHandler(e)}
         />
         <br />
         <br />
-        <RadioButtonGroup
+        { /* <RadioButtonGroup
           name="Theme"
           defaultSelected={false}
           onChange={(e, v) => this.themeChangeHandler(e, v)}
@@ -157,10 +166,20 @@ class Settings extends Component {
             value
             label="Dark Theme"
           />
-        </RadioButtonGroup>
-        <div style={{ float: 'right' }}>
-          <FlatButton label="SAVE" primary onClick={e => this.saveHandler(e)} />
-        </div>
+        </RadioButtonGroup>*/}
+        <RaisedButton
+          label="SAVE"
+          secondary
+          onClick={e => this.saveHandler(e)}
+          style={{ float: 'right', margin: '50px 0 0 0' }}
+        />
+        <RaisedButton
+          onClick={e => this.nimGitClick(e)}
+          primary
+          style={{ float: 'bottom left', margin: '50px 0 0 0' }}
+          label="nimGit"
+          icon={<FontIcon className="muidocs-icon-custom-github" />}
+        />
       </div>
     );
   }

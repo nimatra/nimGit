@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { List, ListItem, Divider } from 'material-ui';
+import { List, ListItem, Divider, FontIcon } from 'material-ui';
 import IssueItem from './Item';
 import {
     assignedIssueListSelector,
@@ -74,31 +74,40 @@ class Page extends Component {
     return (
       <List>
         <ListItem
-          primaryText="Assigned"
+          initiallyOpen
+          leftAvatar={(<FontIcon className="muidocs-icon-action-assignment" />)}
+          primaryText="ASSIGNED"
           primaryTogglesNestedList
           nestedItems={assignedItems}
         />
         <Divider />
         <ListItem
-          primaryText="Created"
+          initiallyOpen
+          leftAvatar={(<FontIcon className="muidocs-icon-action-create" />)}
+          primaryText="CREATED"
           primaryTogglesNestedList
           nestedItems={createdItems}
         />
         <Divider />
         <ListItem
-          primaryText="Mentioned"
+          initiallyOpen
+          leftAvatar={(<FontIcon className="muidocs-icon-action-assignment-ind" />)}
+          primaryText="MENTIONED"
           primaryTogglesNestedList
           nestedItems={mentionedItems}
         />
         <Divider />
         <ListItem
-          primaryText="Subscribed"
+          initiallyOpen
+          leftAvatar={(<FontIcon className="muidocs-icon-action-power" />)}
+          primaryText="SUBSRIBED"
           primaryTogglesNestedList
           nestedItems={subscribedItems}
         />
         <Divider />
         <ListItem
-          primaryText="All"
+          primaryText="ALL"
+          leftAvatar={(<FontIcon className="muidocs-icon-content-select-all" />)}
           primaryTogglesNestedList
           nestedItems={allItems}
         />
