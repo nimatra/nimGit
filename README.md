@@ -1,4 +1,7 @@
 # Watch your GitHub Issues and Pull Requests From A Chrome Extension
+![alt text][logo]
+
+[logo]:https://cloud.githubusercontent.com/assets/1885507/23336382/6a12cd6c-fb9c-11e6-906a-a82e99ee262a.png
 Get nimGit from [Chrome Web Store](https://chrome.google.com/webstore/detail/nkgpdnkngjnnphipjecfihibdjfhocbl)
 
 ## Installation
