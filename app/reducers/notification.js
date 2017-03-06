@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/ActionTypes';
 
 const initialState = {
   sync: false,
-  error: '',
+  error: {},
   notificationList: [],
 };
 

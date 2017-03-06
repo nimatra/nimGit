@@ -6,112 +6,115 @@ import { user, repo } from '../testData';
 const initialState = {
   activeRepo: {},
   repos: [],
-  token: '',
+  token: {},
   user: {},
-  username: '',
+  username: {},
   isDarkThemeOn: false,
+  isRepoValid: false,
+  isTokenValid: false,
+  isUserValid: false,
 };
 
 describe('githubExtension settings reducer', () => {
   it('should handle initial state', () => {
     expect(
       settings(undefined, {})
-    ).to.eql([...initialState]);
+    ).to.eql(initialState);
   });
 
   it('should handle SET_TOKEN', () => {
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_TOKEN,
         data: 'token 1',
       })
-    ).to.eql([Object.assign({}, initialState, { token: 'token 1' })]);
+    ).to.eql({ ...initialState, token: 'token 1' });
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_TOKEN,
         data: 'token 2',
       })
-    ).to.eql([Object.assign({}, initialState, { token: 'token 2' })]);
+    ).to.eql({ ...initialState, token: 'token 2' });
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_TOKEN,
-        data: '',
+        data: {},
       })
-    ).to.eql([Object.assign({}, initialState, { token: '' })]);
+    ).to.eql({ ...initialState, token: {} });
   });
 
   it('should handle SET_USER', () => {
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_USER,
         data: user,
       })
-    ).to.eql([Object.assign({}, initialState, { user })]);
+    ).to.eql({ ...initialState, user });
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_USER,
         data: {},
       })
-    ).to.eql([Object.assign({}, initialState, { user: {} })]);
+    ).to.eql({ ...initialState, user: {} });
   });
 
   it('should handle SET_USERNAME', () => {
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_USERNAME,
         data: user.login,
       })
-    ).to.eql([Object.assign({}, initialState, { username: user.login })]);
+    ).to.eql({ ...initialState, username: user.login });
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_USERNAME,
-        data: '',
+        data: {},
       })
-    ).to.eql([Object.assign({}, initialState, { username: '' })]);
+    ).to.eql({ ...initialState, username: {} });
   });
 
   it('should handle ADD_REPO', () => {
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.ADD_REPO,
         data: repo,
       })
-    ).to.eql([Object.assign({}, initialState, { repos: [repo] })]);
+    ).to.eql({ ...initialState, repos: [repo] });
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.ADD_REPO,
         data: {},
       })
-    ).to.eql([Object.assign({}, initialState, { repos: [] })]);
+    ).to.eql({ ...initialState, repos: [] });
   });
 
   it('should handle SET_ACTIVE_REPO', () => {
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_ACTIVE_REPO,
         data: repo,
       })
-    ).to.eql([Object.assign({}, initialState, { activeRepo: repo })]);
+    ).to.eql({ ...initialState, activeRepo: repo });
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_ACTIVE_REPO,
         data: {},
       })
-    ).to.eql([Object.assign({}, initialState, { activeRepo: {} })]);
+    ).to.eql({ ...initialState, activeRepo: {} });
   });
 
   it('should handle SET_DARK_THEME', () => {
     expect(
-      settings([], {
+      settings(undefined, {
         type: types.SET_DARK_THEME,
         data: true,
       })
-    ).to.eql([Object.assign({}, initialState, { isDarkThemeOn: true })]);
+    ).to.eql({ ...initialState, isDarkThemeOn: true });
     expect(
-      settings([], {
-        type: types.SET_ACTIVE_REPO,
+      settings(undefined, {
+        type: types.SET_DARK_THEME,
         data: false,
       })
-    ).to.eql([Object.assign({}, initialState, { isDarkThemeOn: false })]);
+    ).to.eql({ ...initialState, isDarkThemeOn: false });
   });
 });

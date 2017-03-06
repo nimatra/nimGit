@@ -6,11 +6,11 @@ describe('githubExtension pull requests reducer', () => {
   it('should handle initial state', () => {
     expect(
       pullRequest(undefined, {})
-    ).to.eql([{
+    ).to.eql({
       sync: false,
-      error: '',
+      error: {},
       pullRequestList: [],
-    }]);
+    });
   });
 
   it('should handle GET_PULL_REQUESTS_START', () => {
@@ -18,11 +18,11 @@ describe('githubExtension pull requests reducer', () => {
       pullRequest([], {
         type: types.GET_PULL_REQUESTS_START,
       })
-    ).to.eql([{
+    ).to.eql({
       sync: true,
-      error: '',
+      error: {},
       pullRequestList: [],
-    }]);
+    });
   });
 
   it('should handle GET_PULL_REQUESTS_SUCCESS', () => {
@@ -31,11 +31,11 @@ describe('githubExtension pull requests reducer', () => {
         type: types.GET_PULL_REQUESTS_SUCCESS,
         data: [1, 2, 3],
       })
-    ).to.eql([{
+    ).to.eql({
       sync: false,
-      error: '',
+      error: {},
       pullRequestList: [1, 2, 3],
-    }]);
+    });
   });
 
   it('should handle GET_PULL_REQUESTS_ERROR', () => {
@@ -44,10 +44,10 @@ describe('githubExtension pull requests reducer', () => {
         type: types.GET_PULL_REQUESTS_ERROR,
         data: 'error',
       })
-    ).to.eql([{
+    ).to.eql({
       sync: false,
       error: 'error',
       pullRequestList: [],
-    }]);
+    });
   });
 });

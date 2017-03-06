@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/ActionTypes';
 
 const initialState = {
   sync: false,
-  error: '',
+  error: {},
   assignedIssueList: [],
   createdIssueList: [],
   mentionedIssueList: [],
@@ -12,7 +12,13 @@ const initialState = {
 
 const actionsMap = {
   [ActionTypes.GET_ISSUES_START](state, action) {
-    return Object.assign({}, state, { sync: true, error: {}, allIssueList: [] });
+    return Object.assign({}, state, { sync: true,
+      error: {},
+      assignedIssueList: [],
+      createdIssueList: [],
+      mentionedIssueList: [],
+      subscribedIssueList: [],
+      allIssueList: [] });
   },
   [ActionTypes.GET_ASSIGNED_ISSUES_SUCCESS](state, action) {
     return Object.assign({}, state, { sync: false, error: {}, assignedIssueList: action.data });
@@ -30,11 +36,11 @@ const actionsMap = {
     return Object.assign({}, state, { sync: false, error: {}, allIssueList: action.data });
   },
   [ActionTypes.GET_ISSUES_ERROR](state, action) {
-    return Object.assign({}, state, { sync: false, error: action.data, allIssueList: [] });
+    return Object.assign({}, state, { sync: false, error: action.data });
   },
 };
 
-export default function pullRequest(state = initialState, action) {
+export default function issue(state = initialState, action) {
   const reduceFn = actionsMap[action.type];
   if (!reduceFn) return state;
   return reduceFn(state, action);

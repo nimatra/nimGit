@@ -1,11 +1,12 @@
 import * as ActionTypes from '../constants/ActionTypes';
+import { isEmpty } from 'lodash';
 
 const initialState = {
   activeRepo: {},
   repos: [],
-  token: '',
+  token: {},
   user: {},
-  username: '',
+  username: {},
   isDarkThemeOn: false,
   isRepoValid: false,
   isTokenValid: false,
@@ -23,7 +24,10 @@ const actionsMap = {
     return Object.assign({}, state, { username: action.data });
   },
   [ActionTypes.ADD_REPO](state, action) {
-    return Object.assign({}, state, { repos: [action.data, ...state.repos] });
+    if (isEmpty(action.data)) {
+      return state;
+    }
+    return Object.assign({}, state, { repos: state.repos ? [action.data, ...state.repos] : [action.data] });
   },
   [ActionTypes.SET_ACTIVE_REPO](state, action) {
     return Object.assign({}, state, { activeRepo: action.data });

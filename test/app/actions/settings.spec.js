@@ -18,7 +18,7 @@ describe('githubExtension settings actions', () => {
     });
   });
   it('setUsername should create SET_USERNAME action', () => {
-    expect(actions.setToken(user.login)).to.eql({
+    expect(actions.setUsername(user.login)).to.eql({
       type: types.SET_USERNAME,
       data: user.login,
     });

@@ -7,35 +7,35 @@ describe('githubExtension navigation reducer', () => {
   it('should handle initial state', () => {
     expect(
       navigation(undefined, {})
-    ).to.eql([{
+    ).to.eql({
       activePage: Pages.SETTINGS,
-    }]);
+    });
   });
 
   it('should handle NAVIGATE_TO', () => {
     expect(
-      navigation([], {
+      navigation({}, {
         type: types.NAVIGATE_TO,
         data: Pages.NOTIFICATIONS,
       })
-    ).to.eql([{
+    ).to.eql({
       activePage: Pages.NOTIFICATIONS,
-    }]);
+    });
     expect(
-      navigation([], {
+      navigation({}, {
         type: types.NAVIGATE_TO,
         data: Pages.PULL_REQUESTS,
       })
-    ).to.eql([{
+    ).to.eql({
       activePage: Pages.PULL_REQUESTS,
-    }]);
+    });
     expect(
-      navigation([], {
+      navigation({}, {
         type: types.NAVIGATE_TO,
         data: Pages.SETTINGS,
       })
-    ).to.eql([{
+    ).to.eql({
       activePage: Pages.SETTINGS,
-    }]);
+    });
   });
 });

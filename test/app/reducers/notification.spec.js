@@ -6,11 +6,11 @@ describe('githubExtension notification reducer', () => {
   it('should handle initial state', () => {
     expect(
       notification(undefined, {})
-    ).to.eql([{
+    ).to.eql({
       sync: false,
-      error: '',
+      error: {},
       notificationList: [],
-    }]);
+    });
   });
 
   it('should handle GET_NOTIFICATIONS_START', () => {
@@ -18,11 +18,11 @@ describe('githubExtension notification reducer', () => {
       notification([], {
         type: types.GET_NOTIFICATIONS_START,
       })
-    ).to.eql([{
+    ).to.eql({
       sync: true,
-      error: '',
+      error: {},
       notificationList: [],
-    }]);
+    });
   });
 
   it('should handle GET_NOTIFICATIONS_SUCCESS', () => {
@@ -31,11 +31,11 @@ describe('githubExtension notification reducer', () => {
         type: types.GET_NOTIFICATIONS_SUCCESS,
         data: [1, 2, 3],
       })
-    ).to.eql([{
+    ).to.eql({
       sync: false,
-      error: '',
+      error: {},
       notificationList: [1, 2, 3],
-    }]);
+    });
   });
 
   it('should handle GET_NOTIFICATIONS_ERROR', () => {
@@ -44,10 +44,10 @@ describe('githubExtension notification reducer', () => {
         type: types.GET_NOTIFICATIONS_ERROR,
         data: 'error',
       })
-    ).to.eql([{
+    ).to.eql({
       sync: false,
       error: 'error',
       notificationList: [],
-    }]);
+    });
   });
 });
