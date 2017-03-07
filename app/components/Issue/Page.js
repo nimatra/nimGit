@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { List, ListItem, Divider, FontIcon } from 'material-ui';
+import { isEmpty } from 'lodash';
+import { Card, CardHeader, Divider } from 'material-ui';
 import IssueItem from './Item';
 import {
     assignedIssueListSelector,
@@ -10,6 +11,9 @@ import {
     allIssueListSelector,
  } from '../../selectors/issue';
 
+const listStyle = { 'margin-top': '25px' };
+
+const listItemStyle = { background: 'white', margin: '5px 10px 5px 10px' };
 class Page extends Component {
   static propTypes = {
     assignedIssueList: PropTypes.array.isRequired,
@@ -33,85 +37,95 @@ class Page extends Component {
         createdIssueList,
         mentionedIssueList,
         subscribedIssueList,
-        allIssueList,
-        actions } = this.props;
+        allIssueList } = this.props;
 
     const assignedItems = assignedIssueList ? assignedIssueList.map(item => (
       <IssueItem
         key={item.id}
-        issue={item}
+        user={item.user}
+        title={item.title}
+        body={item.body}
+        html_url={item.html_url}
       />))
-        : (<div />);
+        : (null);
 
     const createdItems = createdIssueList ? createdIssueList.map(item => (
       <IssueItem
         key={item.id}
-        issue={item}
+        user={item.user}
+        title={item.title}
+        body={item.body}
+        html_url={item.html_url}
       />))
-        : (<div />);
+        : (null);
 
     const mentionedItems = mentionedIssueList ? mentionedIssueList.map(item => (
       <IssueItem
         key={item.id}
-        issue={item}
+        user={item.user}
+        title={item.title}
+        body={item.body}
+        html_url={item.html_url}
       />))
-        : (<div />);
+        : (null);
 
     const subscribedItems = subscribedIssueList ? subscribedIssueList.map(item => (
       <IssueItem
         key={item.id}
-        issue={item}
+        user={item.user}
+        title={item.title}
+        body={item.body}
+        html_url={item.html_url}
       />))
-        : (<div />);
+        : (null);
 
     const allItems = allIssueList ? allIssueList.map(item => (
       <IssueItem
         key={item.id}
-        issue={item}
+        user={item.user}
+        title={item.title}
+        body={item.body}
+        html_url={item.html_url}
       />))
-        : (<div />);
+        : (null);
 
     return (
-      <List>
-        <ListItem
-          initiallyOpen
-          leftAvatar={(<FontIcon className="muidocs-icon-action-assignment" />)}
-          primaryText="ASSIGNED"
-          primaryTogglesNestedList
-          nestedItems={assignedItems}
-        />
+      <div style={listStyle}>
+        {!isEmpty(assignedIssueList) && <Card style={listItemStyle}>
+          <CardHeader
+            title="ASSIGNED"
+          />
+          {assignedItems}
+        </Card>}
         <Divider />
-        <ListItem
-          initiallyOpen
-          leftAvatar={(<FontIcon className="muidocs-icon-action-create" />)}
-          primaryText="CREATED"
-          primaryTogglesNestedList
-          nestedItems={createdItems}
-        />
+        {!isEmpty(createdIssueList) && <Card style={listItemStyle}>
+          <CardHeader
+            title="CREATED"
+          />
+          {createdItems}
+        </Card>}
         <Divider />
-        <ListItem
-          initiallyOpen
-          leftAvatar={(<FontIcon className="muidocs-icon-action-assignment-ind" />)}
-          primaryText="MENTIONED"
-          primaryTogglesNestedList
-          nestedItems={mentionedItems}
-        />
+        {!isEmpty(mentionedIssueList) && <Card style={listItemStyle}>
+          <CardHeader
+            title="MENTIONED"
+          />
+          {mentionedItems}
+        </Card>}
         <Divider />
-        <ListItem
-          initiallyOpen
-          leftAvatar={(<FontIcon className="muidocs-icon-action-power" />)}
-          primaryText="SUBSRIBED"
-          primaryTogglesNestedList
-          nestedItems={subscribedItems}
-        />
+        {!isEmpty(subscribedIssueList) && <Card style={listItemStyle}>
+          <CardHeader
+            title="SUBSRIBED"
+          />
+          {subscribedItems}
+        </Card>}
         <Divider />
-        <ListItem
-          primaryText="ALL"
-          leftAvatar={(<FontIcon className="muidocs-icon-content-select-all" />)}
-          primaryTogglesNestedList
-          nestedItems={allItems}
-        />
-      </List>);
+        {!isEmpty(allIssueList) && <Card style={listItemStyle}>
+          <CardHeader
+            title="ALL"
+          />
+          {allItems}
+        </Card>}
+      </div>);
   }
 }
 

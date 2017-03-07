@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import * as types from '../../../app/constants/ActionTypes';
 import issue from '../../../app/reducers/issue';
+import { issue as sampleIssue } from '../testData';
 
 describe('githubExtension issues reducer', () => {
   it('should handle initial state', () => {
@@ -37,60 +38,60 @@ describe('githubExtension issues reducer', () => {
     expect(
       issue([], {
         type: types.GET_ASSIGNED_ISSUES_SUCCESS,
-        data: [1, 2, 3],
+        data: [sampleIssue],
       })
     ).to.eql({
       sync: false,
       error: {},
-      assignedIssueList: [1, 2, 3],
+      assignedIssueList: [sampleIssue],
     });
   });
   it('should handle GET_CREATED_ISSUES_SUCCESS', () => {
     expect(
       issue([], {
         type: types.GET_CREATED_ISSUES_SUCCESS,
-        data: [1, 2, 3],
+        data: [sampleIssue],
       })
     ).to.eql({
       sync: false,
       error: {},
-      createdIssueList: [1, 2, 3],
+      createdIssueList: [sampleIssue],
     });
   });
   it('should handle GET_MENTIONED_ISSUES_SUCCESS', () => {
     expect(
       issue([], {
         type: types.GET_MENTIONED_ISSUES_SUCCESS,
-        data: [1, 2, 3],
+        data: [sampleIssue],
       })
     ).to.eql({
       sync: false,
       error: {},
-      mentionedIssueList: [1, 2, 3],
+      mentionedIssueList: [sampleIssue],
     });
   });
   it('should handle GET_SUBSCRIBED_ISSUES_SUCCESS', () => {
     expect(
       issue([], {
         type: types.GET_SUBSCRIBED_ISSUES_SUCCESS,
-        data: [1, 2, 3],
+        data: [sampleIssue],
       })
     ).to.eql({
       sync: false,
       error: {},
-      subscribedIssueList: [1, 2, 3],
+      subscribedIssueList: [sampleIssue],
     });
   });
   it('should handle GET_ALL_ISSUES_SUCCESS', () => {
     expect(
       issue([], {
         type: types.GET_ALL_ISSUES_SUCCESS,
-        data: [1, 2, 3],
+        data: [sampleIssue],
       })
     ).to.eql({
       sync: false,
       error: {},
-      allIssueList: [1, 2, 3],
+      allIssueList: [sampleIssue],
     });
   });
 

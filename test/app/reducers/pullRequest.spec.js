@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import * as types from '../../../app/constants/ActionTypes';
 import pullRequest from '../../../app/reducers/pullRequest';
+import { pullRequest as samplePullRequest } from '../testData';
 
 describe('githubExtension pull requests reducer', () => {
   it('should handle initial state', () => {
@@ -29,12 +30,12 @@ describe('githubExtension pull requests reducer', () => {
     expect(
       pullRequest([], {
         type: types.GET_PULL_REQUESTS_SUCCESS,
-        data: [1, 2, 3],
+        data: [samplePullRequest],
       })
     ).to.eql({
       sync: false,
       error: {},
-      pullRequestList: [1, 2, 3],
+      pullRequestList: [samplePullRequest],
     });
   });
 

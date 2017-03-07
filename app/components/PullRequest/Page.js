@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { MobileTearSheet, List, Divider, ListItem } from 'material-ui';
-import PullRequestItem from './Item';
+import { } from 'material-ui';
+import PullRequestItem from '../Issue/Item';
 import { pullRequestListSelector } from '../../selectors/pullRequest';
 
+const listStyle = { margin: '25px 10px 5px 10px' };
 class Page extends Component {
   static propTypes = {
     pullRequestList: PropTypes.array.isRequired,
@@ -19,19 +20,22 @@ class Page extends Component {
 
   render() {
     const { pullRequestList, actions } = this.props;
-    let items = (<ListItem />);
+    let items = (null);
 
     if (pullRequestList) {
       items = pullRequestList.map(item => (
         <PullRequestItem
           key={item.id}
-          pullRequest={item}
+          user={item.user}
+          title={item.title}
+          body={item.body}
+          html_url={item.html_url}
         />));
     }
     return (
-      <List>
+      <div style={listStyle}>
         { items }
-      </List>);
+      </div>);
   }
 }
 
