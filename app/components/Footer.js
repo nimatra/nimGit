@@ -3,7 +3,6 @@ import { FontIcon } from 'material-ui';
 
 
 export default class Footer extends Component {
-
   constructor(props, context) {
     super(props, context);
     if (props.onShow) {
@@ -14,13 +13,16 @@ export default class Footer extends Component {
     if (nextProps.onShow) {
     }
   }
+
   openGithub = function() {
     debugger;
     chrome.tabs.create({ url: 'https://github.com/nimatra/githubextension' });
   }
 
   renderClearButton() {
-    const { getNotifications, getPullRequests, token, fullRepoName } = this.props;
+    const {
+      getNotifications, getPullRequests, token, fullRepoName,
+    } = this.props;
     const onClickHandler = () => {
       getNotifications(token);
       getPullRequests(fullRepoName, token);

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
-import { TextField, FlatButton, RadioButtonGroup, RadioButton, RaisedButton, FontIcon } from 'material-ui';
+import { TextField, RaisedButton, FontIcon } from 'material-ui';
 import { reposSelector, activeRepoSelector, usernameSelector, userSelector, tokenSelector } from '../../selectors/settings';
 import * as Pages from '../../constants/Pages';
 
-const errorMessage = 'Double-check this field';
 const style = {
   margin: '15px',
 };
@@ -35,7 +33,7 @@ class Settings extends Component {
     chrome.tabs.create({ url: 'https://github.com/nimatra/nimGit' });
   };
 
-  saveHandler(e) {
+  saveHandler() {
     const { actions } = this.props;
     actions.validateSettings(this.state.token, this.state.username, this.state.repo, this.state.owner);
     actions.getPullRequests(this.state.repo, this.state.owner, this.state.token);
@@ -89,7 +87,7 @@ class Settings extends Component {
       repo: e.target.value,
     });
   }
-  themeChangeHandler(e, v) {
+  themeChangeHandler(v) {
     const { actions } = this.props;
     actions.setDarkTheme(!!v);
   }
@@ -162,7 +160,7 @@ class Settings extends Component {
         <RaisedButton
           label="SAVE"
           secondary
-          onClick={e => this.saveHandler(e)}
+          onClick={e => this.saveHandler()}
           style={{ float: 'right', margin: '50px 0 0 0' }}
         />
         <RaisedButton

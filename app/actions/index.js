@@ -1,13 +1,14 @@
-import * as pullRequestActions from '../actions/pullRequest';
-import * as notificationActions from '../actions/notification';
-import * as settings from '../actions/settings';
-import * as navigation from '../actions/navigation';
-import * as issue from '../actions/issue';
+import * as pullRequestActions from './pullRequest';
+import * as notificationActions from './notification';
+import * as settings from './settings';
+import * as navigation from './navigation';
+import * as issue from './issue';
 
 const combined = {
   ...pullRequestActions,
   ...notificationActions,
   ...settings,
   ...navigation,
-  ...issue };
+  ...issue,
+};
 export default combined;

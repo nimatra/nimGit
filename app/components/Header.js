@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Tab, Avatar, FontIcon } from 'material-ui';
+import { Tabs, Tab, Avatar } from 'material-ui';
 import { connect } from 'react-redux';
 import { activeRepoSelector, tokenSelector, userSelector } from '../selectors/settings';
 import { activePageSelector } from '../selectors/navigation';
@@ -9,11 +9,11 @@ const tabStyle = {
   height: '45px',
 };
 class Header extends Component {
-
   constructor(props) {
     super(props);
     this.state = { firstRun: true };
   }
+
   switchTo = function(page) {
     const { actions, activeRepo, token } = this.props;
     if (activeRepo && activeRepo.owner) {

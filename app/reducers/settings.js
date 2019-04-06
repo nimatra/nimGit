@@ -1,5 +1,5 @@
-import * as ActionTypes from '../constants/ActionTypes';
 import { isEmpty } from 'lodash';
+import * as ActionTypes from '../constants/ActionTypes';
 
 const initialState = {
   activeRepo: {},
