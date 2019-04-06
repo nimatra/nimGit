@@ -1,9 +1,9 @@
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, createStore as reduxCreateStore, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import storage from '../utils/storage';
 import promise from 'redux-promise';
-import createLogger from 'redux-logger';
 
 const logger = createLogger();
 // If Redux DevTools Extension is installed use it, otherwise use Redux compose
@@ -20,8 +20,8 @@ const enhancer = composeEnhancers(
   storage(),
 );
 
-export default function(initialState) {
-  const store = createStore(rootReducer, initialState, enhancer);
+const createStore = (initialState) => {
+  const store = reduxCreateStore(rootReducer, initialState, enhancer);
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {
@@ -31,4 +31,6 @@ export default function(initialState) {
     });
   }
   return store;
-}
+};
+
+export default createStore;

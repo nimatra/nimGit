@@ -1,35 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { MuiThemeProvider } from 'material-ui';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import Router from '../components/Router';
 import combinedActions from '../actions';
 
 
 // Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
-
-@connect(
-  state => ({
-    navigation: state.navigation,
-    settings: state.settings,
-  }),
-  dispatch => ({
-    actions: bindActionCreators(combinedActions, dispatch),
-  })
-)
-export default class App extends Component {
-
-  static propTypes = {
-    navigation: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
+class App extends Component {
 
   componentWillMount() {
   }
@@ -49,3 +30,21 @@ export default class App extends Component {
     );
   }
 }
+
+function mapDispatchToProps() {
+  return dispatch => ({
+    actions: bindActionCreators(combinedActions, dispatch),
+  });
+}
+
+function mapStateToProps() {
+  return state => ({
+    navigation: state.navigation,
+    settings: state.settings,
+  });
+}
+
+export default connect(
+  mapStateToProps(),
+  mapDispatchToProps()
+)(App);

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { } from 'material-ui';
 import PullRequestItem from '../Issue/Item';
@@ -6,10 +6,6 @@ import { pullRequestListSelector } from '../../selectors/pullRequest';
 
 const listStyle = { margin: '25px 10px 5px 10px' };
 class Page extends Component {
-  static propTypes = {
-    pullRequestList: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
 
   constructor(props, context) {
     super(props, context);

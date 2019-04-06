@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { TextField, FlatButton, RadioButtonGroup, RadioButton, RaisedButton, FontIcon } from 'material-ui';
@@ -11,14 +11,6 @@ const style = {
 };
 
 class Settings extends Component {
-  static propTypes = {
-    repos: PropTypes.array,
-    activeRepo: PropTypes.object,
-    username: PropTypes.string,
-    user: PropTypes.object,
-    token: PropTypes.string,
-    actions: PropTypes.object.isRequired,
-  };
 
   constructor(props, context) {
     super(props, context);

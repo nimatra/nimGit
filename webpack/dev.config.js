@@ -8,6 +8,7 @@ const customPath = path.join(__dirname, './customPublicPath');
 const hotScript = 'webpack-hot-middleware/client?path=__webpack_hmr&dynamicPublicPath=true';
 
 const baseDevConfig = () => ({
+  mode: 'development',
   devtool: 'eval-cheap-module-source-map',
   entry: {
     nimgit: [customPath, hotScript, path.join(__dirname, '../chrome/extension/nimgit')],
@@ -16,62 +17,76 @@ const baseDevConfig = () => ({
   devMiddleware: {
     publicPath: `http://${host}:${port}/js`,
     stats: {
-      colors: true
+      colors: true,
     },
-    noInfo: true
+    noInfo: true,
   },
   hotMiddleware: {
-    path: '/js/__webpack_hmr'
+    path: '/js/__webpack_hmr',
   },
   output: {
     path: path.join(__dirname, '../dev/js'),
     filename: '[name].bundle.js',
-    chunkFilename: '[id].chunk.js'
-  },
-  postcss() {
-    return postCSSConfig;
+    chunkFilename: '[id].chunk.js',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.IgnorePlugin(/[^/]+\/[\S]+.prod$/),
     new webpack.DefinePlugin({
       __HOST__: `'${host}'`,
       __PORT__: port,
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
-      }
-    })
+        NODE_ENV: JSON.stringify('development'),
+      },
+    }),
   ],
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['.js'],
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loader: 'babel',
       exclude: /node_modules/,
-      query: {
-        presets: ['react-hmre']
-      }
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+          babelrc: false,
+          presets: [
+            ['@babel/env', {
+              targets: {
+                browsers: ['Chrome >=59'],
+              },
+              modules: false,
+              loose: true,
+            }], '@babel/react'],
+
+          plugins: [
+            'react-hot-loader/babel',
+            ['import', { libraryName: 'antd', style: 'css' }],
+            '@babel/proposal-object-rest-spread',
+            '@babel/plugin-proposal-class-properties',
+          ],
+        },
+      }],
     }, {
       test: /\.css$/,
-      loaders: [
-        'style',
-        'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-        'postcss'
-      ]
-    }]
-  }
+      use: ['style-loader', {
+        loader: 'postcss-loader',
+        options: postCSSConfig,
+      }],
+    }],
+  },
 });
 
 const injectPageConfig = baseDevConfig();
 injectPageConfig.entry = [
   customPath,
-  path.join(__dirname, '../chrome/extension/inject')
+  path.join(__dirname, '../chrome/extension/inject'),
 ];
 delete injectPageConfig.hotMiddleware;
-delete injectPageConfig.module.loaders[0].query;
+delete injectPageConfig.module.rules[0].query;
 injectPageConfig.plugins.shift(); // remove HotModuleReplacementPlugin
 injectPageConfig.output = {
   path: path.join(__dirname, '../dev/js'),
@@ -81,5 +96,5 @@ const appConfig = baseDevConfig();
 
 module.exports = [
   injectPageConfig,
-  appConfig
+  appConfig,
 ];

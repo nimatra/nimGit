@@ -1,16 +1,8 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { FontIcon } from 'material-ui';
 
 
 export default class Footer extends Component {
-
-  static propTypes = {
-    onShow: PropTypes.func.isRequired,
-    getNotifications: PropTypes.func.isRequired,
-    getPullRequests: PropTypes.func.isRequired,
-    token: PropTypes.object.isRequired,
-    fullRepoName: PropTypes.object.isRequired,
-  };
 
   constructor(props, context) {
     super(props, context);

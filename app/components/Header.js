@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { Tabs, Tab, Avatar, FontIcon } from 'material-ui';
 import { connect } from 'react-redux';
 import { activeRepoSelector, tokenSelector, userSelector } from '../selectors/settings';
@@ -9,14 +9,6 @@ const tabStyle = {
   height: '45px',
 };
 class Header extends Component {
-
-  static propTypes = {
-    actions: PropTypes.object,
-    activePage: PropTypes.string,
-    activeRepo: PropTypes.object,
-    token: PropTypes.string,
-    user: PropTypes.object,
-  };
 
   constructor(props) {
     super(props);
