@@ -1,5 +1,5 @@
 export function urlEncodeData(data) {
-  const params = Object.keys(data).map(key => data[key] ? `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}` : '');
+  const params = Object.keys(data).map(key => (data[key] ? `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}` : ''));
   return params.filter(value => !!value).join('&');
 }
 export function httpGetAsync(theUrl, callback) {
@@ -13,4 +13,3 @@ export function httpGetAsync(theUrl, callback) {
   // xmlHttp.setRequestHeader('Access-Control-Allow-Origin', '*');
   xmlHttp.send(null);
 }
-

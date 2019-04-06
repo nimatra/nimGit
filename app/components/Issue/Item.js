@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Avatar, Card, CardActions, CardHeader, CardTitle,
-         FlatButton, ContentAdd } from 'material-ui';
+import {
+  Avatar, Card, CardHeader, CardTitle,
+} from 'material-ui';
 
 export default class Item extends Component {
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -36,7 +36,8 @@ export default class Item extends Component {
             color: 'black',
             cursor: 'pointer',
             marginLeft: '10px',
-            marginRight: '20px' }}
+            marginRight: '20px',
+          }}
         />
       </Card>
     );

@@ -26,12 +26,14 @@ class Page extends Component {
           title={item.title}
           body={item.body}
           html_url={item.html_url}
-        />));
+        />
+));
     }
     return (
       <div style={listStyle}>
         { items }
-      </div>);
+      </div>
+);
   }
 }
 

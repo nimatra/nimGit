@@ -8,7 +8,8 @@ export const usernameSelector = state => state.settings.username;
 export const tokenSelector = state => state.settings.token;
 
 const getSettings = createSelector(
-    settingsSelector,
-    settings => settings);
+  settingsSelector,
+  settings => settings
+);
 
 export default getSettings;

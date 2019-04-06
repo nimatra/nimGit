@@ -4,12 +4,12 @@ import { isEmpty } from 'lodash';
 import { Card, CardHeader, Divider } from 'material-ui';
 import IssueItem from './Item';
 import {
-    assignedIssueListSelector,
-    createdIssueListSelector,
-    mentionedIssueListSelector,
-    subscribedIssueListSelector,
-    allIssueListSelector,
- } from '../../selectors/issue';
+  assignedIssueListSelector,
+  createdIssueListSelector,
+  mentionedIssueListSelector,
+  subscribedIssueListSelector,
+  allIssueListSelector,
+} from '../../selectors/issue';
 
 const listStyle = { 'margin-top': '25px' };
 
@@ -25,11 +25,12 @@ class Page extends Component {
 
   render() {
     const {
-        assignedIssueList,
-        createdIssueList,
-        mentionedIssueList,
-        subscribedIssueList,
-        allIssueList } = this.props;
+      assignedIssueList,
+      createdIssueList,
+      mentionedIssueList,
+      subscribedIssueList,
+      allIssueList 
+} = this.props;
 
     const assignedItems = assignedIssueList ? assignedIssueList.map(item => (
       <IssueItem
@@ -38,8 +39,9 @@ class Page extends Component {
         title={item.title}
         body={item.body}
         html_url={item.html_url}
-      />))
-        : (null);
+      />
+))
+      : (null);
 
     const createdItems = createdIssueList ? createdIssueList.map(item => (
       <IssueItem
@@ -48,8 +50,9 @@ class Page extends Component {
         title={item.title}
         body={item.body}
         html_url={item.html_url}
-      />))
-        : (null);
+      />
+))
+      : (null);
 
     const mentionedItems = mentionedIssueList ? mentionedIssueList.map(item => (
       <IssueItem
@@ -58,8 +61,9 @@ class Page extends Component {
         title={item.title}
         body={item.body}
         html_url={item.html_url}
-      />))
-        : (null);
+      />
+))
+      : (null);
 
     const subscribedItems = subscribedIssueList ? subscribedIssueList.map(item => (
       <IssueItem
@@ -68,8 +72,9 @@ class Page extends Component {
         title={item.title}
         body={item.body}
         html_url={item.html_url}
-      />))
-        : (null);
+      />
+))
+      : (null);
 
     const allItems = allIssueList ? allIssueList.map(item => (
       <IssueItem
@@ -78,8 +83,9 @@ class Page extends Component {
         title={item.title}
         body={item.body}
         html_url={item.html_url}
-      />))
-        : (null);
+      />
+))
+      : (null);
 
     return (
       <div style={listStyle}>
@@ -117,7 +123,8 @@ class Page extends Component {
           />
           {allItems}
         </Card>}
-      </div>);
+      </div>
+);
   }
 }
 
