@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { Card, CardHeader, Divider } from 'material-ui';
@@ -15,14 +15,6 @@ const listStyle = { 'margin-top': '25px' };
 
 const listItemStyle = { background: 'white', margin: '5px 10px 5px 10px' };
 class Page extends Component {
-  static propTypes = {
-    assignedIssueList: PropTypes.array.isRequired,
-    createdIssueList: PropTypes.array.isRequired,
-    mentionedIssueList: PropTypes.array.isRequired,
-    subscribedIssueList: PropTypes.array.isRequired,
-    allIssueList: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
 
   constructor(props, context) {
     super(props, context);

@@ -1,15 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Avatar, Card, CardActions, CardHeader, CardTitle,
          FlatButton, ContentAdd } from 'material-ui';
 
 export default class Item extends Component {
-
-  static propTypes = {
-    user: PropTypes.object.isRequired,
-    title: PropTypes.string.isRequired,
-    body: PropTypes.string,
-    html_url: PropTypes.string.isRequired,
-  };
 
   constructor(props, context) {
     super(props, context);

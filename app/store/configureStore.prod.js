@@ -9,6 +9,4 @@ const enhancer = compose(
   storage()
 );
 
-export default function(initialState) {
-  return createStore(rootReducer, initialState, enhancer);
-}
+export default createStore = initialState => createStore(rootReducer, initialState, enhancer);

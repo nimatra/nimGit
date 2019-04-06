@@ -1,10 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 export default class Item extends Component {
-
-  static propTypes = {
-    notification: PropTypes.object.isRequired,
-  };
 
   constructor(props, context) {
     super(props, context);
