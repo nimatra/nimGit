@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Tabs, Tab, Avatar } from 'material-ui';
+import { SourcePull, CommentQuestion, Settings } from 'mdi-material-ui';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { connect } from 'react-redux';
 import { activeRepoSelector, tokenSelector, userSelector } from '../selectors/settings';
 import { activePageSelector } from '../selectors/navigation';
@@ -25,26 +27,27 @@ class Header extends Component {
 
   render() {
     const { activePage, user } = this.props;
-    const iconSource = user && user.avatar_url ? user.avatar_url : 'http://www.flaticon.com/premium-icon/icons/svg/327/327924.svg';
     return (
       <div style={{ marginBottom: '8px' }}>
-        <Tabs value={activePage} onChange={e => this.switchTo(e)} style={{ height: '30px' }}>
-          <Tab
+        <BottomNavigation value={activePage} onChange={e => this.switchTo(e)} style={{ height: '50px' }}>
+          <BottomNavigationAction
             label="ISSUES"
             value={Pages.ISSUES}
             style={tabStyle}
+            icon={<CommentQuestion />}
           />
-          <Tab
+          <BottomNavigationAction
             label="PULL REQUESTS"
             value={Pages.PULL_REQUESTS}
             style={tabStyle}
+            icon={<SourcePull />}
           />
-          <Tab
-            icon={<Avatar src={iconSource} size={30} />}
+          <BottomNavigationAction
+            icon={<Settings />}
             value={Pages.SETTINGS}
             style={tabStyle}
           />
-        </Tabs>
+        </BottomNavigation>
       </div>
     );
   }

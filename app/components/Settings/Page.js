@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TextField, RaisedButton, FontIcon } from 'material-ui';
-import { reposSelector, activeRepoSelector, usernameSelector, userSelector, tokenSelector } from '../../selectors/settings';
+import { TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { DoorOpen, GithubFace } from 'mdi-material-ui';
+import {
+  reposSelector, activeRepoSelector, usernameSelector, userSelector, tokenSelector,
+} from '../../selectors/settings';
 import * as Pages from '../../constants/Pages';
 
 const style = {
@@ -9,7 +13,6 @@ const style = {
 };
 
 class Settings extends Component {
-
   constructor(props, context) {
     super(props, context);
 
@@ -72,25 +75,30 @@ class Settings extends Component {
       token: e.target.value,
     });
   }
+
   usernameChangeHandler(e) {
     this.setState({
       username: e.target.value,
     });
   }
+
   ownerChangeHandler(e) {
     this.setState({
       owner: e.target.value,
     });
   }
+
   repoChangeHandler(e) {
     this.setState({
       repo: e.target.value,
     });
   }
+
   themeChangeHandler(v) {
     const { actions } = this.props;
     actions.setDarkTheme(!!v);
   }
+
   render() {
     // const { repos, activeRepo, username, token, actions } = this.props;
     // if (token && username && !isEmpty(repos) && activeRepo) {
@@ -107,8 +115,9 @@ class Settings extends Component {
       <div style={style}>
         <TextField
           id="Token-Text-Field"
-          floatingLabelText="Github 'Personal Access Token' with 'repo' permissions"
-          errorText={this.state.invalidToken}
+          placeholder="Github 'Personal Access Token' with 'repo' permissions"
+          helperText={this.state.invalidToken}
+          error={!!this.state.invalidToken}
           value={this.state.token}
           type="password"
           style={{ width: '80%' }}
@@ -117,8 +126,9 @@ class Settings extends Component {
         <br />
         <TextField
           id="Username-Text-Field"
-          floatingLabelText="Username"
-          errorText={this.state.invalidUsername}
+          placeholder="Username"
+          helperText={this.state.invalidUsername}
+          error={!!this.state.invalidUsername}
           value={this.state.username}
           style={{ width: '80%' }}
           onChange={e => this.usernameChangeHandler(e)}
@@ -126,8 +136,9 @@ class Settings extends Component {
         <br />
         <TextField
           id="Owner-Text-Field"
-          floatingLabelText="Repository Owner"
-          errorText={this.state.invalidOwner}
+          placeholder="Repository Owner"
+          helperText={this.state.invalidOwner}
+          error={!!this.state.invalidOwner}
           value={this.state.owner}
           style={{ width: '80%' }}
           onChange={e => this.ownerChangeHandler(e)}
@@ -135,41 +146,32 @@ class Settings extends Component {
         <br />
         <TextField
           id="Repo-Text-Field"
-          floatingLabelText="Repository Name"
-          errorText={this.state.invalidRepo}
+          placeholder="Repository Name"
+          helperText={this.state.invalidRepo}
+          error={!!this.state.invalidRepo}
           value={this.state.repo}
           style={{ width: '80%' }}
           onChange={e => this.repoChangeHandler(e)}
         />
         <br />
         <br />
-        { /* <RadioButtonGroup
-          name="Theme"
-          defaultSelected={false}
-          onChange={(e, v) => this.themeChangeHandler(e, v)}
-        >
-          <RadioButton
-            value={false}
-            label="Light Theme"
-          />
-          <RadioButton
-            value
-            label="Dark Theme"
-          />
-        </RadioButtonGroup>*/}
-        <RaisedButton
+        <Button
+          variant="contained"
           label="SAVE"
-          secondary
+          style={{ float: 'left' }}
           onClick={e => this.saveHandler()}
-          style={{ float: 'right', margin: '50px 0 0 0' }}
-        />
-        <RaisedButton
+        >
+        Save
+        </Button>
+        <Button
+          variant="contained"
           onClick={e => this.nimGitClick(e)}
-          primary
-          style={{ float: 'bottom left', margin: '50px 0 0 0' }}
+          style={{ float: 'right' }}
           label="nimGit"
-          icon={<FontIcon className="muidocs-icon-custom-github" />}
-        />
+        >
+          <GithubFace />
+
+        </Button>
       </div>
     );
   }

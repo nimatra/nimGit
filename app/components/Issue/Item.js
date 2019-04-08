@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
-  Avatar, Card, CardHeader, CardTitle,
-} from 'material-ui';
+  Avatar, Card, CardHeader,
+} from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 
 export default class Item extends Component {
   constructor(props, context) {
@@ -23,21 +24,16 @@ export default class Item extends Component {
         <CardHeader
           avatar={<Avatar src={user.avatar_url} size={30} alt="" />}
           title={user.login}
-          subtitle={title}
-          actAsExpander
-          showExpandableButton
-        />
-        <CardTitle
-          subtitle={body}
-          expandable
-          onClick={this.handleClick}
-          style={{
-            backgroundColor: '#ECEFF1',
-            color: 'black',
-            cursor: 'pointer',
-            marginLeft: '10px',
-            marginRight: '20px',
-          }}
+          subheader={title}
+          action={(
+            <Link
+              onClick={this.handleClick}
+              component="button"
+              variant="body2"
+            >
+              {(body && `${body.substring(0, 20)}..`) || 'Click to open'}
+            </Link>
+          )}
         />
       </Card>
     );

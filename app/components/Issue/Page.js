@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
-import { Card, CardHeader, Divider } from 'material-ui';
+import { Card, CardHeader, Divider } from '@material-ui/core';
 import IssueItem from './Item';
 import {
   assignedIssueListSelector,
@@ -11,11 +11,10 @@ import {
   allIssueListSelector,
 } from '../../selectors/issue';
 
-const listStyle = { 'margin-top': '25px' };
+const listStyle = { marginTop: '25px' };
 
 const listItemStyle = { background: 'white', margin: '5px 10px 5px 10px' };
 class Page extends Component {
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -29,8 +28,8 @@ class Page extends Component {
       createdIssueList,
       mentionedIssueList,
       subscribedIssueList,
-      allIssueList 
-} = this.props;
+      allIssueList,
+    } = this.props;
 
     const assignedItems = assignedIssueList ? assignedIssueList.map(item => (
       <IssueItem
@@ -40,7 +39,7 @@ class Page extends Component {
         body={item.body}
         html_url={item.html_url}
       />
-))
+    ))
       : (null);
 
     const createdItems = createdIssueList ? createdIssueList.map(item => (
@@ -51,7 +50,7 @@ class Page extends Component {
         body={item.body}
         html_url={item.html_url}
       />
-))
+    ))
       : (null);
 
     const mentionedItems = mentionedIssueList ? mentionedIssueList.map(item => (
@@ -62,7 +61,7 @@ class Page extends Component {
         body={item.body}
         html_url={item.html_url}
       />
-))
+    ))
       : (null);
 
     const subscribedItems = subscribedIssueList ? subscribedIssueList.map(item => (
@@ -73,7 +72,7 @@ class Page extends Component {
         body={item.body}
         html_url={item.html_url}
       />
-))
+    ))
       : (null);
 
     const allItems = allIssueList ? allIssueList.map(item => (
@@ -84,47 +83,57 @@ class Page extends Component {
         body={item.body}
         html_url={item.html_url}
       />
-))
+    ))
       : (null);
 
     return (
       <div style={listStyle}>
-        {!isEmpty(assignedIssueList) && <Card style={listItemStyle}>
-          <CardHeader
-            title="ASSIGNED"
-          />
-          {assignedItems}
-        </Card>}
+        {!isEmpty(assignedIssueList) && (
+          <Card style={listItemStyle}>
+            <CardHeader
+              title="ASSIGNED"
+            />
+            {assignedItems}
+          </Card>
+        )}
         <Divider />
-        {!isEmpty(createdIssueList) && <Card style={listItemStyle}>
-          <CardHeader
-            title="CREATED"
-          />
-          {createdItems}
-        </Card>}
+        {!isEmpty(createdIssueList) && (
+          <Card style={listItemStyle}>
+            <CardHeader
+              title="CREATED"
+            />
+            {createdItems}
+          </Card>
+        )}
         <Divider />
-        {!isEmpty(mentionedIssueList) && <Card style={listItemStyle}>
-          <CardHeader
-            title="MENTIONED"
-          />
-          {mentionedItems}
-        </Card>}
+        {!isEmpty(mentionedIssueList) && (
+          <Card style={listItemStyle}>
+            <CardHeader
+              title="MENTIONED"
+            />
+            {mentionedItems}
+          </Card>
+        )}
         <Divider />
-        {!isEmpty(subscribedIssueList) && <Card style={listItemStyle}>
-          <CardHeader
-            title="SUBSRIBED"
-          />
-          {subscribedItems}
-        </Card>}
+        {!isEmpty(subscribedIssueList) && (
+          <Card style={listItemStyle}>
+            <CardHeader
+              title="SUBSRIBED"
+            />
+            {subscribedItems}
+          </Card>
+        )}
         <Divider />
-        {!isEmpty(allIssueList) && <Card style={listItemStyle}>
-          <CardHeader
-            title="ALL"
-          />
-          {allItems}
-        </Card>}
+        {!isEmpty(allIssueList) && (
+          <Card style={listItemStyle}>
+            <CardHeader
+              title="ALL"
+            />
+            {allItems}
+          </Card>
+        )}
       </div>
-);
+    );
   }
 }
 

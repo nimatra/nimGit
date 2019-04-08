@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { } from 'material-ui';
+import { } from '@material-ui/core';
 import PullRequestItem from '../Issue/Item';
 import { pullRequestListSelector } from '../../selectors/pullRequest';
 

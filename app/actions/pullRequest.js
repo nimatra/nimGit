@@ -32,7 +32,7 @@ export function getPullRequestsError(data) {
  * @param {String} direction
  * @returns
  */
-export function getPullRequests(owner, repo, token, state, head, base, sort, direction) {
+export function getPullRequests(repo, owner, token, state, head, base, sort, direction) {
   params.access_token = token;
   params.base = base;
   params.head = head;
