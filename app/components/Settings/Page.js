@@ -41,7 +41,9 @@ class Settings extends Component {
     actions.validateSettings(this.state.token, this.state.username, this.state.repo, this.state.owner);
     actions.getPullRequests(this.state.repo, this.state.owner, this.state.token);
     actions.getIssues(this.state.repo, this.state.owner, this.state.token);
+    actions.getRepos(this.state.owner, this.state.token);
     actions.navigateTo(Pages.ISSUES);
+
     // const isUserValid = actions.getUser(this.state.token, this.state.username);
     // const isRepoValid = actions.getRepo(this.state.token, this.state.repo, this.state.owner);
     // if (isUserValid && isRepoValid) {
@@ -122,6 +124,9 @@ class Settings extends Component {
           type="password"
           style={{ width: '80%' }}
           onChange={e => this.tokenChangeHandler(e)}
+          margin="normal"
+          variant="outlined"
+          label="Token"
         />
         <br />
         <TextField
@@ -132,6 +137,9 @@ class Settings extends Component {
           value={this.state.username}
           style={{ width: '80%' }}
           onChange={e => this.usernameChangeHandler(e)}
+          margin="normal"
+          variant="outlined"
+          label="Username"
         />
         <br />
         <TextField
@@ -142,6 +150,9 @@ class Settings extends Component {
           value={this.state.owner}
           style={{ width: '80%' }}
           onChange={e => this.ownerChangeHandler(e)}
+          margin="normal"
+          variant="outlined"
+          label="Repo Owner"
         />
         <br />
         <TextField
@@ -152,6 +163,9 @@ class Settings extends Component {
           value={this.state.repo}
           style={{ width: '80%' }}
           onChange={e => this.repoChangeHandler(e)}
+          margin="normal"
+          variant="outlined"
+          label="Repo Name"
         />
         <br />
         <br />

@@ -21,6 +21,7 @@ class Header extends Component {
     if (activeRepo && activeRepo.owner) {
       actions.getPullRequests(activeRepo.name, activeRepo.owner.login, token);
       actions.getIssues(activeRepo.name, activeRepo.owner.login, token);
+      actions.getRepos(this.state.owner, this.state.token);
     }
     actions.navigateTo(page);
   }
