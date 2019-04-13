@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
-import { Card, CardHeader, Divider } from '@material-ui/core';
+import {
+  Card, CardHeader, Divider, Chip,
+} from '@material-ui/core';
 import IssueItem from './Item';
 import {
   assignedIssueListSelector,
@@ -11,7 +13,11 @@ import {
   allIssueListSelector,
 } from '../../selectors/issue';
 
-const listStyle = { marginTop: '25px' };
+const headerStyle = {
+  margin: '15px',
+  left: '40%',
+  position: 'relative',
+};
 
 const listItemStyle = { background: 'white', margin: '5px 10px 5px 10px' };
 class Page extends Component {
@@ -87,50 +93,75 @@ class Page extends Component {
       : (null);
 
     return (
-      <div style={listStyle}>
+      <div>
         {!isEmpty(assignedIssueList) && (
-          <Card style={listItemStyle}>
-            <CardHeader
-              title="ASSIGNED"
+          <div>
+            <Chip
+              style={headerStyle}
+              label="Assigned"
+              color="primary"
+              variant="outlined"
             />
-            {assignedItems}
-          </Card>
+            <Card>
+              {assignedItems}
+            </Card>
+          </div>
         )}
         <Divider />
         {!isEmpty(createdIssueList) && (
-          <Card style={listItemStyle}>
-            <CardHeader
-              title="CREATED"
+          <div>
+            <Chip
+              style={headerStyle}
+              label="Created"
+              color="primary"
+              variant="outlined"
             />
-            {createdItems}
-          </Card>
+            <Card style={listItemStyle}>
+              {createdItems}
+            </Card>
+          </div>
         )}
         <Divider />
         {!isEmpty(mentionedIssueList) && (
-          <Card style={listItemStyle}>
-            <CardHeader
-              title="MENTIONED"
+          <div>
+            <Chip
+              style={headerStyle}
+              label="Mentioned"
+              color="primary"
+              variant="outlined"
             />
-            {mentionedItems}
-          </Card>
+            <Card style={listItemStyle}>
+              {mentionedItems}
+            </Card>
+          </div>
         )}
         <Divider />
         {!isEmpty(subscribedIssueList) && (
-          <Card style={listItemStyle}>
-            <CardHeader
-              title="SUBSRIBED"
+          <div>
+            <Chip
+              style={headerStyle}
+              label="Mentioned"
+              color="primary"
+              variant="outlined"
             />
-            {subscribedItems}
-          </Card>
+            <Card style={listItemStyle}>
+              {subscribedItems}
+            </Card>
+          </div>
         )}
         <Divider />
         {!isEmpty(allIssueList) && (
-          <Card style={listItemStyle}>
-            <CardHeader
-              title="ALL"
+          <div>
+            <Chip
+              style={headerStyle}
+              label="All"
+              color="primary"
+              variant="outlined"
             />
-            {allItems}
-          </Card>
+            <Card style={listItemStyle}>
+              {allItems}
+            </Card>
+          </div>
         )}
       </div>
     );

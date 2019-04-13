@@ -1,5 +1,8 @@
+
 function saveState(state) {
-  chrome.storage.local.set({ state: JSON.stringify(state) });
+  const stateCopy = Object.assign({}, state);
+  stateCopy.navigation = {};
+  chrome.storage.local.set({ state: JSON.stringify(stateCopy) });
 }
 
 // notifications unmarked count

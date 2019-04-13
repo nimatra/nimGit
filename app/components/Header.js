@@ -29,7 +29,7 @@ class Header extends Component {
     const { activePage, user } = this.props;
     return (
       <div style={{ marginBottom: '8px' }}>
-        <BottomNavigation value={activePage} onChange={e => this.switchTo(e)} style={{ height: '50px' }}>
+        <BottomNavigation value={activePage} onChange={(e, v) => this.switchTo(v)} style={{ height: '50px' }}>
           <BottomNavigationAction
             label="ISSUES"
             value={Pages.ISSUES}
@@ -43,6 +43,7 @@ class Header extends Component {
             icon={<SourcePull />}
           />
           <BottomNavigationAction
+            label="Settings"
             icon={<Settings />}
             value={Pages.SETTINGS}
             style={tabStyle}
