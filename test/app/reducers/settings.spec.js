@@ -6,6 +6,7 @@ import { user, repo } from '../testData';
 const initialState = {
   activeRepo: {},
   repos: [],
+  owners: [],
   token: {},
   user: {},
   username: {},
@@ -73,16 +74,31 @@ describe('githubExtension settings reducer', () => {
     ).to.eql({ ...initialState, username: {} });
   });
 
-  it('should handle ADD_REPO', () => {
+  it('should handle ADD_OWNER', () => {
     expect(
       settings(undefined, {
-        type: types.ADD_REPO,
+        type: types.ADD_OWNER,
         data: repo,
       })
     ).to.eql({ ...initialState, repos: [repo] });
     expect(
       settings(undefined, {
-        type: types.ADD_REPO,
+        type: types.ADD_OWNER,
+        data: {},
+      })
+    ).to.eql({ ...initialState, repos: [] });
+  });
+
+  it('should handle REMOVE_OWNER', () => {
+    expect(
+      settings({ ...initialState, repos: [repo] }, {
+        type: types.REMOVE_OWNER,
+        data: repo,
+      })
+    ).to.eql({ ...initialState, repos: [] });
+    expect(
+      settings(undefined, {
+        type: types.REMOVE_OWNER,
         data: {},
       })
     ).to.eql({ ...initialState, repos: [] });

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as types from '../../../app/constants/ActionTypes';
 import * as actions from '../../../app/actions/settings';
-import { user, repo } from '../testData';
+import { user, repo, owner } from '../testData';
 
 
 describe('githubExtension settings actions', () => {
@@ -29,10 +29,16 @@ describe('githubExtension settings actions', () => {
       data: repo,
     });
   });
-  it('addRepo should create ADD_REPO action', () => {
-    expect(actions.addRepo(repo)).to.eql({
-      type: types.ADD_REPO,
-      data: repo,
+  it('addOwner should create ADD_OWNER action', () => {
+    expect(actions.addOwner(owner)).to.eql({
+      type: types.ADD_OWNER,
+      data: owner,
+    });
+  });
+  it('removeOwner should create REMOVE_OWNER action', () => {
+    expect(actions.removeOwner(owner)).to.eql({
+      type: types.REMOVE_OWNER,
+      data: owner,
     });
   });
 });
