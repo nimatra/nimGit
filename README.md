@@ -1,7 +1,6 @@
 # Watch your GitHub Issues and Pull Requests From A Chrome Extension
-![alt text][logo]
 
-[logo]:<img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Octicons-octoface.svg" alt="logo" width="200"/>
+
 Get nimGit from [Chrome Web Store](https://chrome.google.com/webstore/detail/nkgpdnkngjnnphipjecfihibdjfhocbl)
 
 ## Installation
