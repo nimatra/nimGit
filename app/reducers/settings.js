@@ -5,7 +5,7 @@ const initialState = {
   activeRepo: {},
   repos: [],
   owners: [],
-  token: {},
+  token: '',
   user: {},
   username: '',
   isDarkThemeOn: false,
