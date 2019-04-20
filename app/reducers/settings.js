@@ -38,20 +38,38 @@ const actionsMap = {
     return Object.assign(
       {},
       state,
-      { owners: state.owners && state.owners.filter(owner => owner.login !== action.data) }
+      {
+        owners: state.owners
+        && Object.values(state.owners).filter(owner => owner.login !== action.data),
+      }
+    );
+  },
+  [ActionTypes.RESET](state, action) {
+    return Object.assign(
+      {},
+      state,
+      { owners: {}, repos: [] }
     );
   },
   [ActionTypes.ADD_REPO](state, action) {
     if (isEmpty(action.data)) {
       return state;
     }
-    return Object.assign({}, state, { repos: state.repos ? [action.data, ...state.repos] : [action.data] });
+    return Object.assign(
+      {},
+      state,
+      { repos: state.repos ? [action.data, ...state.repos] : [action.data] }
+    );
   },
   [ActionTypes.REMOVE_REPO](state, action) {
     if (isEmpty(action.data)) {
       return state;
     }
-    return Object.assign({}, state, { repos: state.repos && state.repos.filter(repo => repo.name !== action.data) });
+    return Object.assign(
+      {},
+      state,
+      { repos: state.repos && state.repos.filter(repo => repo.name !== action.data) }
+    );
   },
   [ActionTypes.SET_ACTIVE_REPO](state, action) {
     return Object.assign({}, state, { activeRepo: action.data });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import PullRequestItem from '../Issue/Item';
 import { pullRequestListSelector } from '../../selectors/pullRequest';
 
@@ -15,9 +16,21 @@ class Page extends Component {
 
   render() {
     const { pullRequestList, actions } = this.props;
-    let items = (null);
+    let items = (
+      <Typography
+        variant="subtitle1"
+        gutterBottom
+        style={{
+          'margin-top': '25%',
+          'text-align': 'center',
+        }}
+      >
+Select a repo to view its active pull requests
 
-    if (pullRequestList) {
+      </Typography>
+    );
+
+    if (pullRequestList && pullRequestList.length) {
       items = pullRequestList.map(item => (
         <PullRequestItem
           key={item.id}

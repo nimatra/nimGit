@@ -12,10 +12,12 @@ import {
 class Router extends Component {
   componentWillMount() {
     const { actions, activeRepo, token } = this.props;
-    const repo = activeRepo;
-    if (repo && repo.owner && token) {
-      actions.getPullRequests(repo.name, repo.owner.login, token);
-      actions.getIssues(repo.name, repo.owner.login, token);
+    if (token) {
+      actions.getIssues(token);
+    }
+    if (activeRepo && activeRepo.owner && token) {
+      actions.getPullRequests(activeRepo.name, activeRepo.owner.login, token);
+      actions.getIssues(activeRepo.name, activeRepo.owner.login, token);
     }
   }
 

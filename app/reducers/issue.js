@@ -40,6 +40,19 @@ const actionsMap = {
   [ActionTypes.GET_ISSUES_ERROR](state, action) {
     return Object.assign({}, state, { sync: false, error: action.data });
   },
+  [ActionTypes.RESET](state, action) {
+    return Object.assign(
+      {},
+      state,
+      {
+        createdIssueList: [],
+        mentionedIssueList: [],
+        subscribedIssueList: [],
+        allIssueList: [],
+        assignedIssueList: [],
+      }
+    );
+  },
 };
 
 export default function issue(state = initialState, action) {

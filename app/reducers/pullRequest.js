@@ -16,6 +16,13 @@ const actionsMap = {
   [ActionTypes.GET_PULL_REQUESTS_ERROR](state, action) {
     return Object.assign({}, state, { sync: false, error: action.data, pullRequestList: [] });
   },
+  [ActionTypes.RESET](state, action) {
+    return Object.assign(
+      {},
+      state,
+      { pullRequestList: [] }
+    );
+  },
 };
 
 export default function pullRequest(state = initialState, action) {
