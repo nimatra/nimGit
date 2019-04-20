@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TextField, RaisedButton, FontIcon } from 'material-ui';
-import { reposSelector, activeRepoSelector, usernameSelector, userSelector, tokenSelector } from '../../selectors/settings';
+import { TextField, IconButton } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { DoorOpen, GithubFace } from 'mdi-material-ui';
+import { Add } from '@material-ui/icons';
+import OwnersChips from './ownersChips';
+import {
+  reposSelector, getActiveRepo, usernameSelector, userSelector, tokenSelector, ownersSelector,
+} from '../../selectors/settings';
 import * as Pages from '../../constants/Pages';
 
 const style = {
@@ -9,18 +15,19 @@ const style = {
 };
 
 class Settings extends Component {
-
   constructor(props, context) {
     super(props, context);
 
     const { activeRepo, username, token } = this.props;
     this.state = {
       editing: false,
-      username,
+      username: '',
       invalidUsername: '',
-      token,
+      token: '',
       invalidToken: '',
-      owner: activeRepo && activeRepo.owner ? activeRepo.owner.login : '',
+      // owner: activeRepo && activeRepo.owner ? activeRepo.owner.login : '',
+      owner: '',
+      owners: {},
       invalidOwner: '',
       repo: activeRepo ? activeRepo.name : '',
       invalidRepo: '',
@@ -33,16 +40,19 @@ class Settings extends Component {
     chrome.tabs.create({ url: 'https://github.com/nimatra/nimGit' });
   };
 
-  saveHandler() {
-    const { actions } = this.props;
-    actions.validateSettings(this.state.token, this.state.username, this.state.repo, this.state.owner);
-    actions.getPullRequests(this.state.repo, this.state.owner, this.state.token);
-    actions.getIssues(this.state.repo, this.state.owner, this.state.token);
+  saveHandler = () => {
+    const { actions, owners: reduxOwners } = this.props;
+    const {
+      owners, token, username, repo,
+    } = this.state;
+    const allOwners = [...Object.values(owners), ...Object.values(reduxOwners).map(o => o.login)];
+    actions.validateSettings(token, username, repo, allOwners);
     actions.navigateTo(Pages.ISSUES);
-    // const isUserValid = actions.getUser(this.state.token, this.state.username);
-    // const isRepoValid = actions.getRepo(this.state.token, this.state.repo, this.state.owner);
+
+    // const isUserValid = actions.getUser(token, username);
+    // const isRepoValid = actions.getRepo(token, repo, owner);
     // if (isUserValid && isRepoValid) {
-    //   actions.setToken(this.state.token);
+    //   actions.setToken(token);
     //   actions.navigateTo(Pages.PULL_REQUESTS);
     // } else {
     //   this.setState({
@@ -67,32 +77,58 @@ class Settings extends Component {
     // }
   }
 
-  tokenChangeHandler(e) {
+  tokenChangeHandler = (e) => {
     this.setState({
       token: e.target.value,
     });
   }
-  usernameChangeHandler(e) {
+
+  usernameChangeHandler = (e) => {
     this.setState({
       username: e.target.value,
     });
   }
-  ownerChangeHandler(e) {
+
+  ownerChangeHandler = (e) => {
     this.setState({
       owner: e.target.value,
     });
   }
-  repoChangeHandler(e) {
+
+  addOwnerHandler = (e) => {
+    const { actions } = this.props;
+    const { owner, owners } = this.state;
+    if (actions && owner) {
+      const newOwners = owners;
+      newOwners[`${owner}`] = { login: owner };
+      this.setState({
+        owner: '',
+        owners: newOwners,
+      });
+    }
+  }
+
+  repoChangeHandler = (e) => {
     this.setState({
       repo: e.target.value,
     });
   }
-  themeChangeHandler(v) {
+
+  themeChangeHandler = (v) => {
     const { actions } = this.props;
     actions.setDarkTheme(!!v);
   }
+
   render() {
-    // const { repos, activeRepo, username, token, actions } = this.props;
+    const {
+      owners: reduxOwners,
+      actions, token, username,
+    } = this.props;
+    const {
+      owners, invalidToken,
+      invalidUsername, invalidOwner, owner,
+    } = this.state;
+    const allOwners = [...Object.values({ ...owners, ...reduxOwners })];
     // if (token && username && !isEmpty(repos) && activeRepo) {
     //   if (actions.validateSettings(
     //     token,
@@ -107,69 +143,90 @@ class Settings extends Component {
       <div style={style}>
         <TextField
           id="Token-Text-Field"
-          floatingLabelText="Github 'Personal Access Token' with 'repo' permissions"
-          errorText={this.state.invalidToken}
-          value={this.state.token}
+          placeholder="Github 'Personal Access Token' with 'repo' permissions"
+          helperText={invalidToken}
+          error={!!invalidToken}
+          value={token}
           type="password"
           style={{ width: '80%' }}
-          onChange={e => this.tokenChangeHandler(e)}
+          onChange={this.tokenChangeHandler}
+          margin="normal"
+          variant="outlined"
+          label="Token"
         />
         <br />
         <TextField
           id="Username-Text-Field"
-          floatingLabelText="Username"
-          errorText={this.state.invalidUsername}
-          value={this.state.username}
+          placeholder="Username"
+          helperText={invalidUsername}
+          error={!!invalidUsername}
+          value={username}
           style={{ width: '80%' }}
-          onChange={e => this.usernameChangeHandler(e)}
+          onChange={this.usernameChangeHandler}
+          margin="normal"
+          variant="outlined"
+          label="Username"
         />
         <br />
-        <TextField
-          id="Owner-Text-Field"
-          floatingLabelText="Repository Owner"
-          errorText={this.state.invalidOwner}
-          value={this.state.owner}
+        <div style={{ display: 'flex' }}>
+          <TextField
+            id="Owner-Text-Field"
+            placeholder="Repository Owner"
+            helperText={invalidOwner}
+            error={!!invalidOwner}
+            value={owner}
+            style={{ width: '72%' }}
+            onChange={this.ownerChangeHandler}
+            margin="normal"
+            variant="outlined"
+            label="Repo Owner"
+          />
+          <IconButton
+            aria-label="Add"
+            onClick={this.addOwnerHandler}
+            style={{ margin: 'auto 0' }}
+          >
+            <Add />
+          </IconButton>
+        </div>
+        <br />
+        <OwnersChips
+          actions={actions}
+          owners={allOwners}
           style={{ width: '80%' }}
-          onChange={e => this.ownerChangeHandler(e)}
         />
         <br />
-        <TextField
+        {/* <TextField
           id="Repo-Text-Field"
-          floatingLabelText="Repository Name"
-          errorText={this.state.invalidRepo}
-          value={this.state.repo}
+          placeholder="Repository Name"
+          helperText={invalidRepo}
+          error={!!invalidRepo}
+          value={repo}
           style={{ width: '80%' }}
-          onChange={e => this.repoChangeHandler(e)}
+          onChange={this.repoChangeHandler}
+          margin="normal"
+          variant="outlined"
+          label="Repo Name"
         />
+        <br /> */}
         <br />
-        <br />
-        { /* <RadioButtonGroup
-          name="Theme"
-          defaultSelected={false}
-          onChange={(e, v) => this.themeChangeHandler(e, v)}
-        >
-          <RadioButton
-            value={false}
-            label="Light Theme"
-          />
-          <RadioButton
-            value
-            label="Dark Theme"
-          />
-        </RadioButtonGroup>*/}
-        <RaisedButton
+        <Button
+          variant="contained"
           label="SAVE"
-          secondary
-          onClick={e => this.saveHandler()}
-          style={{ float: 'right', margin: '50px 0 0 0' }}
-        />
-        <RaisedButton
-          onClick={e => this.nimGitClick(e)}
-          primary
-          style={{ float: 'bottom left', margin: '50px 0 0 0' }}
+          style={{ float: 'left' }}
+          onClick={this.saveHandler}
+        >
+        Save
+        </Button>
+        <Button
+          variant="contained"
+          onClick={this.nimGitClick}
+          style={{ float: 'right' }}
           label="nimGit"
-          icon={<FontIcon className="muidocs-icon-custom-github" />}
-        />
+        >
+          <GithubFace />
+
+        </Button>
       </div>
     );
   }
@@ -178,10 +235,11 @@ class Settings extends Component {
 
 const mapStateToProps = state => ({
   repos: reposSelector(state),
-  activeRepo: activeRepoSelector(state),
+  activeRepo: getActiveRepo(state),
   username: usernameSelector(state),
   user: userSelector(state),
   token: tokenSelector(state),
+  owners: ownersSelector(state),
 });
 
 const SettingsComponent = connect(

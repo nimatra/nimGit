@@ -12,13 +12,15 @@ const initialState = {
 
 const actionsMap = {
   [ActionTypes.GET_ISSUES_START](state, action) {
-    return Object.assign({}, state, { sync: true,
+    return Object.assign({}, state, {
+      sync: true,
       error: {},
       assignedIssueList: [],
       createdIssueList: [],
       mentionedIssueList: [],
       subscribedIssueList: [],
-      allIssueList: [] });
+      allIssueList: [],
+    });
   },
   [ActionTypes.GET_ASSIGNED_ISSUES_SUCCESS](state, action) {
     return Object.assign({}, state, { sync: false, error: {}, assignedIssueList: action.data });

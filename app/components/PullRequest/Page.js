@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { } from 'material-ui';
+import { } from '@material-ui/core';
 import PullRequestItem from '../Issue/Item';
 import { pullRequestListSelector } from '../../selectors/pullRequest';
 
 const listStyle = { margin: '25px 10px 5px 10px' };
 class Page extends Component {
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -27,13 +26,13 @@ class Page extends Component {
           body={item.body}
           html_url={item.html_url}
         />
-));
+      ));
     }
     return (
       <div style={listStyle}>
         { items }
       </div>
-);
+    );
   }
 }
 

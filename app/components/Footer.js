@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
-import { FontIcon } from 'material-ui';
+import Icon from '@material-ui/core/Icon';
+import { GithubCircle, Refresh } from 'mdi-material-ui';
 
 
 export default class Footer extends Component {
-  constructor(props, context) {
-    super(props, context);
-    if (props.onShow) {
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.onShow) {
-    }
-  }
-
   openGithub = function() {
-    debugger;
-    chrome.tabs.create({ url: 'https://github.com/nimatra/githubextension' });
+    chrome.tabs.create({ url: 'https://github.com/nimatra/nimgit' });
   }
 
   renderClearButton() {
@@ -29,16 +18,8 @@ export default class Footer extends Component {
     };
     return (
       <div>
-        <FontIcon
-          className="muidocs-icon-custom-github"
-          color={fullWhite}
-        />
-        <button
-          className={style.clearRead}
-          onClick={onClickHandler}
-        >
-          Refresh
-        </button>
+        <GithubCircle />
+        <Refresh />
       </div>
     );
   }

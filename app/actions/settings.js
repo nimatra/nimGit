@@ -23,8 +23,20 @@ export function setUser(data) {
   return { type: types.SET_USER, data };
 }
 
+export function addOwner(data) {
+  return { type: types.ADD_OWNER, data };
+}
+
+export function removeOwner(data) {
+  return { type: types.REMOVE_OWNER, data };
+}
+
 export function addRepo(data) {
   return { type: types.ADD_REPO, data };
+}
+
+export function removeRepo(data) {
+  return { type: types.REMOVE_REPO, data };
 }
 
 export function setActiveRepo(data) {
@@ -67,6 +79,22 @@ export function getUser(token, username) {
     dispatch(setIsUserValid(isUserValid));
   });
 }
+/**
+ *
+ * @export
+ * @param {string} token
+ * @param {string} username
+ * @param {string} owner
+ * @returns
+ */
+export function getOwner(token, username, owner) {
+  params.access_token = token;
+  const requestUrl = `${baseUrl}/orgs/${owner}/memberships/${username}?${urlEncodeData(params)}`;
+  return dispatch => httpGetAsync(requestUrl, (response) => {
+    const json = JSON.parse(response || []);
+    dispatch(addOwner(json.organization));
+  });
+}
 
 /**
  *
@@ -85,7 +113,50 @@ export function getRepo(token, repo, owner) {
     const isRepoValid = true;
     if (isRepoValid) {
       dispatch(addRepo(json));
-      dispatch(setActiveRepo(json));
+    }
+    dispatch(setIsRepoValid(isRepoValid));
+  });
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {any} token
+ * @param {any} repo
+ * @param {any} owner
+ * @returns
+ */
+export function getOrgRepos(token, owner) {
+  params.access_token = token;
+  const requestUrl = `${baseUrl}/orgs/${owner}/repos?${urlEncodeData(params)}`;
+  return dispatch => httpGetAsync(requestUrl, (response) => {
+    const json = JSON.parse(response || []);
+    const isRepoValid = !!json;
+    if (isRepoValid) {
+      json.every(repo => dispatch(addRepo(repo)));
+    }
+    dispatch(setIsRepoValid(isRepoValid));
+  });
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {any} token
+ * @param {any} repo
+ * @param {any} owner
+ * @returns
+ */
+export function getUserRepos(token, username) {
+  params.access_token = token;
+  const requestUrl = `${baseUrl}/users/${username}/repos?${urlEncodeData(params)}`;
+  return dispatch => httpGetAsync(requestUrl, (response) => {
+    const json = JSON.parse(response || []);
+    const isRepoValid = !!json;
+    if (isRepoValid) {
+      json.every(repository => dispatch(addRepo(repository)));
     }
     dispatch(setIsRepoValid(isRepoValid));
   });
@@ -100,10 +171,14 @@ export function getRepo(token, repo, owner) {
  * @param {any} repo
  * @param {any} owner
  */
-export function validateSettings(token, username, repo, owner) {
+export function validateSettings(token, username, repo, owners) {
   return (dispatch) => {
+    owners.every((owner) => {
+      dispatch(getOwner(token, username, owner));
+      dispatch(getOrgRepos(token, owner));
+    });
     dispatch(getUser(token, username));
-    dispatch(getRepo(token, repo, owner));
+    dispatch(getUserRepos(token, username));
     dispatch(setToken(token));
   };
 }

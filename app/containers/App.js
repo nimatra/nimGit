@@ -1,26 +1,43 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { MuiThemeProvider } from 'material-ui';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import blueGrey from '@material-ui/core/colors/blueGrey';
 import Router from '../components/Router';
 import combinedActions from '../actions';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: '#4078c0' }, // Purple and green play nicely together.
+    secondary: { main: '#333' }, // This is just green.A700 as hex.
+    type: 'light',
+  },
+  typography: {
+    useNextVariants: true,
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+});
 
 // Needed for onTouchTap
 class App extends Component {
-
-  componentWillMount() {
-  }
-
   render() {
     const { navigation, settings, actions } = this.props;
     // const theme = settings.isDarkThemeOn ? darkBaseTheme : lightBaseTheme;
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+      <MuiThemeProvider theme={theme}>
         <Router
           navigation={navigation}
           settings={settings}

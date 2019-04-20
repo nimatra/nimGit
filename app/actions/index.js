@@ -3,6 +3,7 @@ import * as notificationActions from './notification';
 import * as settings from './settings';
 import * as navigation from './navigation';
 import * as issue from './issue';
+import * as repo from './repo';
 
 const combined = {
   ...pullRequestActions,
@@ -10,5 +11,6 @@ const combined = {
   ...settings,
   ...navigation,
   ...issue,
+  ...repo,
 };
 export default combined;
