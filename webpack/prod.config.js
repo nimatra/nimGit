@@ -1,10 +1,24 @@
 const path = require('path');
 const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 const postCSSConfig = require('./postcss.config');
 
 const customPath = path.join(__dirname, './customPublicPath');
 
 module.exports = {
+  mode: 'production',
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true, // Must be set to true if using source-maps in production
+        terserOptions: {
+          // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+        },
+      }),
+    ],
+  },
   entry: {
     nimgit: [customPath, path.join(__dirname, '../chrome/extension/nimgit')],
     background: [customPath, path.join(__dirname, '../chrome/extension/background')],
@@ -15,19 +29,9 @@ module.exports = {
     filename: '[name].bundle.js',
     chunkFilename: '[id].chunk.js',
   },
-  postcss() {
-    return postCSSConfig;
-  },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.IgnorePlugin(/[^/]+\/[\S]+.dev$/),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      compressor: {
-        warnings: false,
-      },
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
@@ -35,23 +39,39 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['.js'],
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loader: 'babel',
       exclude: /node_modules/,
-      query: {
-        presets: ['react-optimize'],
-      },
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+          babelrc: false,
+          presets: [
+            ['@babel/env', {
+              targets: {
+                browsers: ['Chrome >=59'],
+              },
+              modules: false,
+              loose: true,
+            }], '@babel/react'],
+
+          plugins: [
+            ['import', { libraryName: 'antd', style: 'css' }],
+            '@babel/proposal-object-rest-spread',
+            '@babel/plugin-proposal-class-properties',
+          ],
+        },
+      }],
     }, {
       test: /\.css$/,
-      loaders: [
-        'style',
-        'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-        'postcss',
-      ],
+      use: ['style-loader', {
+        loader: 'postcss-loader',
+        options: postCSSConfig,
+      }],
     }],
   },
 };
