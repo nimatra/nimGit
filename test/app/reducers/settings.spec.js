@@ -9,7 +9,7 @@ const initialState = {
   owners: [],
   token: {},
   user: {},
-  username: {},
+  username: '',
   isDarkThemeOn: false,
   isRepoValid: false,
   isTokenValid: false,

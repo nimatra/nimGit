@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/ActionTypes';
 import * as Pages from '../constants/Pages';
 
 const initialState = {
-  activePage: Pages.SETTINGS,
+  activePage: Pages.PULL_REQUESTS,
 };
 
 const actionsMap = {

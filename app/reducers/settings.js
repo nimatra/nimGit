@@ -7,7 +7,7 @@ const initialState = {
   owners: [],
   token: {},
   user: {},
-  username: {},
+  username: '',
   isDarkThemeOn: false,
   isRepoValid: false,
   isTokenValid: false,
@@ -35,7 +35,11 @@ const actionsMap = {
     if (isEmpty(action.data)) {
       return state;
     }
-    return Object.assign({}, state, { owners: state.owners && state.owners.filter(owner => owner.login !== action.data) });
+    return Object.assign(
+      {},
+      state,
+      { owners: state.owners && state.owners.filter(owner => owner.login !== action.data) }
+    );
   },
   [ActionTypes.ADD_REPO](state, action) {
     if (isEmpty(action.data)) {

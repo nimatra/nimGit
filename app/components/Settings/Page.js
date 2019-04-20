@@ -21,9 +21,9 @@ class Settings extends Component {
     const { activeRepo, username, token } = this.props;
     this.state = {
       editing: false,
-      username,
+      username: '',
       invalidUsername: '',
-      token,
+      token: '',
       invalidToken: '',
       // owner: activeRepo && activeRepo.owner ? activeRepo.owner.login : '',
       owner: '',
@@ -41,11 +41,11 @@ class Settings extends Component {
   };
 
   saveHandler = () => {
-    const { actions, owners: reduxOwners} = this.props;
+    const { actions, owners: reduxOwners } = this.props;
     const {
       owners, token, username, repo,
     } = this.state;
-    const allOwners = [...Object.values(owners), ...reduxOwners.map(o => o.login)];
+    const allOwners = [...Object.values(owners), ...Object.values(reduxOwners).map(o => o.login)];
     actions.validateSettings(token, username, repo, allOwners);
     actions.navigateTo(Pages.ISSUES);
 
@@ -100,7 +100,7 @@ class Settings extends Component {
     const { owner, owners } = this.state;
     if (actions && owner) {
       const newOwners = owners;
-      newOwners[`${owner}`] = owner;
+      newOwners[`${owner}`] = { login: owner };
       this.setState({
         owner: '',
         owners: newOwners,
@@ -122,10 +122,10 @@ class Settings extends Component {
   render() {
     const {
       owners: reduxOwners,
-      actions,
+      actions, token, username,
     } = this.props;
     const {
-      owners, token, username, invalidToken,
+      owners, invalidToken,
       invalidUsername, invalidOwner, owner,
     } = this.state;
     const allOwners = [...Object.values({ ...owners, ...reduxOwners })];

@@ -12,7 +12,7 @@ import Chip from '@material-ui/core/Chip';
 import * as Pages from '../constants/Pages';
 import { activePageSelector } from '../selectors/navigation';
 import {
-  getActiveRepo, tokenSelector, userSelector, reposSelector,
+  getActiveRepo, tokenSelector, userSelector, reposSelector, getRepo,
 } from '../selectors/settings';
 
 const tabStyle = {
@@ -20,9 +20,10 @@ const tabStyle = {
 };
 const formStyle = {
   display: 'flex',
-  width: '50%',
+  width: '33%',
   background: 'white',
   margin: '0 auto',
+  float: 'right',
 };
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -37,14 +38,14 @@ const MenuProps = {
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { firstRun: true, selectedRepo: [] };
+    this.state = { firstRun: true, selectedRepo: props.activeRepo };
   }
 
   handleChange = (event) => {
     const { actions } = this.props;
     actions.setActiveRepo(event.target.value);
     this.setState({ selectedRepo: event.target.value });
-    this.refreshData();
+    this.refreshData(event.target.value);
   };
 
   switchTo = (page) => {
@@ -54,11 +55,11 @@ class Header extends Component {
     actions.navigateTo(page);
   }
 
-  refreshData() {
+  refreshData(activeRepo) {
     const {
-      actions, activeRepo, token
+      actions, token, getRepo,
     } = this.props;
-    const repo = activeRepo;
+    const repo = getRepo(activeRepo);
     if (repo && repo.owner) {
       actions.getPullRequests(repo.name, repo.owner.login, token);
       actions.getIssues(repo.name, repo.owner.login, token);
@@ -69,37 +70,43 @@ class Header extends Component {
     const { activePage, repos } = this.props;
     const { selectedRepo } = this.state;
     return (
-      <div style={{ marginBottom: '8px', background: 'white' }}>
-        <FormControl style={formStyle}>
-          <InputLabel htmlFor="repo-selection">Repo</InputLabel>
-          <Select
-            value={selectedRepo}
-            onChange={this.handleChange}
-            input={<Input id="repo-selection" />}
-            renderValue={selected => (
-              <Chip key={selected.id} label={selected.name} />
-            )}
-            MenuProps={MenuProps}
-          >
-            {repos.map(repo => (
-              <MenuItem key={repo.id} value={repo.name}>
-                {repo}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <BottomNavigation value={activePage} onChange={(e, v) => this.switchTo(v)} style={{ height: '50px' }}>
+      <div style={{ paddingBottom: '10px', paddingTop: '10px', background: 'white' }}>
+        <form autoComplete="on">
+          <FormControl style={formStyle}>
+            <InputLabel htmlFor="repo-selection">Repo</InputLabel>
+            <Select
+              value={selectedRepo || ''}
+              onChange={this.handleChange}
+              input={<Input id="repo-selection" />}
+              MenuProps={MenuProps}
+            >
+              {repos.map(repo => (
+                repo.id && (
+                  <MenuItem key={repo.id} value={repo.name}>
+                    {repo.name}
+                  </MenuItem>
+                )
+              ))}
+            </Select>
+          </FormControl>
+        </form>
+        <BottomNavigation
+          showLabels
+          value={activePage}
+          onChange={(e, v) => this.switchTo(v)}
+          style={{ height: '50px', marginRight: '5px', marginTop: '5px' }}
+        >
           <BottomNavigationAction
-            label="ISSUES"
-            value={Pages.ISSUES}
-            style={tabStyle}
-            icon={<CommentQuestion />}
-          />
-          <BottomNavigationAction
-            label="PULL REQUESTS"
+            label="Pull Requests"
             value={Pages.PULL_REQUESTS}
             style={tabStyle}
             icon={<SourcePull />}
+          />
+          <BottomNavigationAction
+            label="Issues"
+            value={Pages.ISSUES}
+            style={tabStyle}
+            icon={<CommentQuestion />}
           />
           <BottomNavigationAction
             label="Settings"
@@ -119,6 +126,7 @@ const mapStateToProps = state => ({
   token: tokenSelector(state),
   user: userSelector(state),
   repos: reposSelector(state),
+  getRepo: getRepo(state),
 });
 
 const HeaderComponent = connect(

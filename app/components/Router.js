@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import * as pages from '../constants/Pages';
 import IssuePage from './Issue/Page';
 import PullRequestPage from './PullRequest/Page';
 import SettingsPage from './Settings/Page';
 import Header from './Header';
+import {
+  getActiveRepo, tokenSelector, userSelector, reposSelector,
+} from '../selectors/settings';
 
-export default class Router extends Component {
+class Router extends Component {
+  componentWillMount() {
+    const { actions, activeRepo, token } = this.props;
+    const repo = activeRepo;
+    if (repo && repo.owner && token) {
+      actions.getPullRequests(repo.name, repo.owner.login, token);
+      actions.getIssues(repo.name, repo.owner.login, token);
+    }
+  }
+
   render() {
-    const { navigation, actions } = this.props;
+    const { navigation, actions, token } = this.props;
     let page = null;
-    switch (navigation.activePage) {
+    const defaultPage = token ? pages.PULL_REQUESTS : pages.SETTINGS;
+    switch (navigation.activePage || defaultPage) {
       case pages.ISSUES:
         page = (
           <IssuePage
@@ -47,3 +61,16 @@ export default class Router extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  activeRepo: getActiveRepo(state),
+  token: tokenSelector(state),
+  user: userSelector(state),
+  repos: reposSelector(state),
+});
+
+const RouterComponent = connect(
+  mapStateToProps
+)(Router);
+
+export default RouterComponent;

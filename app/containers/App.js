@@ -8,11 +8,12 @@ import combinedActions from '../actions';
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: blueGrey[500] }, // Purple and green play nicely together.
-    secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
+    primary: { main: '#4078c0' }, // Purple and green play nicely together.
+    secondary: { main: '#333' }, // This is just green.A700 as hex.
     type: 'light',
   },
   typography: {
+    useNextVariants: true,
     // Use the system font instead of the default Roboto font.
     fontFamily: [
       '-apple-system',

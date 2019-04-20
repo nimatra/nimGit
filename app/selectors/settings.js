@@ -19,4 +19,9 @@ export const getActiveRepo = createSelector(
   (activeRepo, repos) => repos.filter(r => r.id === activeRepo)[0]
 );
 
+export const getRepo = createSelector(
+  reposSelector,
+  repos => name => repos.filter(r => r.name === name)[0]
+);
+
 export default getSettings;

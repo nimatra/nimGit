@@ -16,7 +16,7 @@ const styles = theme => ({
 class OwnersChips extends React.Component {
   handleDelete = owner => () => {
     const { actions } = this.props;
-    actions.removeRepo(owner);
+    actions.removeOwner(owner.login);
   };
 
   render() {
@@ -27,11 +27,11 @@ class OwnersChips extends React.Component {
         {owners.map((owner) => {
           const icon = <TagFacesIcon />;
 
-          return (
+          return owner && (
             <Chip
-              key={owner}
+              key={owner.login}
               icon={icon}
-              label={owner}
+              label={owner.login}
               onDelete={this.handleDelete(owner)}
               className={classes.chip}
             />

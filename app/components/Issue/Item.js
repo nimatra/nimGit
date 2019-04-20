@@ -18,9 +18,9 @@ export default class Item extends Component {
   };
 
   render() {
-    const { user, title, body } = this.props;
+    const { user, title, body, key } = this.props;
     return (
-      <Card style={{ paddingLeft: '10px', paddingRight: '20px' }}>
+      <Card style={{ paddingLeft: '10px', paddingRight: '20px' }} key={key}>
         <CardHeader
           avatar={<Avatar src={user.avatar_url} size={30} alt="" />}
           title={user.login}
