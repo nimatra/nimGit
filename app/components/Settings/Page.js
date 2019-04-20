@@ -21,9 +21,9 @@ class Settings extends Component {
     const { activeRepo, username, token } = this.props;
     this.state = {
       editing: false,
-      username: '',
+      username: username || '',
       invalidUsername: '',
-      token: '',
+      token: token || '',
       invalidToken: '',
       // owner: activeRepo && activeRepo.owner ? activeRepo.owner.login : '',
       owner: '',
@@ -46,7 +46,8 @@ class Settings extends Component {
       owners, token, username, repo,
     } = this.state;
     const allOwners = [...Object.values(owners), ...Object.values(reduxOwners).map(o => o.login)];
-    actions.validateSettings(token, username, repo, allOwners);
+    Object.values(owners).map(owner => actions.addOwner(owner));
+    actions.validateSettings(token, username, allOwners);
     actions.navigateTo(Pages.ISSUES);
 
     // const isUserValid = actions.getUser(token, username);
@@ -75,6 +76,13 @@ class Settings extends Component {
     //     });
     //   }
     // }
+  }
+
+  validateSettings = () => {
+    const {
+      owners, actions, token, username,
+    } = this.props;
+    actions.validateSettings(token, username, owners);
   }
 
   tokenChangeHandler = (e) => {
@@ -122,10 +130,10 @@ class Settings extends Component {
   render() {
     const {
       owners: reduxOwners,
-      actions, token, username,
+      actions,
     } = this.props;
     const {
-      owners, invalidToken,
+      owners, invalidToken, token, username,
       invalidUsername, invalidOwner, owner,
     } = this.state;
     const allOwners = [...Object.values({ ...owners, ...reduxOwners })];
@@ -193,6 +201,7 @@ class Settings extends Component {
         <OwnersChips
           actions={actions}
           owners={allOwners}
+          validateSettings={this.validateSettings}
           style={{ width: '80%' }}
         />
         <br />

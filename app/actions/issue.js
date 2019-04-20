@@ -92,7 +92,7 @@ function getAllIssues(initialParams, getRequestUrl) {
  * @param {String} direction
  * @returns
  */
-export function getIssues(owner, repo, token, state, head, base, sort, direction) {
+export function getIssues(token, state, head, base, sort, direction) {
   params.access_token = token;
   params.base = base;
   params.head = head;

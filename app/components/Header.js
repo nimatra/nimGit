@@ -59,10 +59,12 @@ class Header extends Component {
     const {
       actions, token, getRepo,
     } = this.props;
+    if (token) {
+      actions.getIssues(token);
+    }
     const repo = getRepo(activeRepo);
     if (repo && repo.owner) {
       actions.getPullRequests(repo.name, repo.owner.login, token);
-      actions.getIssues(repo.name, repo.owner.login, token);
     }
   }
 

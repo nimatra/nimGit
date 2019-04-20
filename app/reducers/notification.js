@@ -16,6 +16,13 @@ const actionsMap = {
   [ActionTypes.GET_NOTIFICATIONS_ERROR](state, action) {
     return Object.assign({}, state, { sync: false, error: action.data, notificationList: [] });
   },
+  [ActionTypes.RESET](state, action) {
+    return Object.assign(
+      {},
+      state,
+      { notificationList: [] }
+    );
+  },
 };
 
 export default function notification(state = initialState, action) {

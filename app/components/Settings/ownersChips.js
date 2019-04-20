@@ -15,8 +15,9 @@ const styles = theme => ({
 
 class OwnersChips extends React.Component {
   handleDelete = owner => () => {
-    const { actions } = this.props;
+    const { actions, validateSettings } = this.props;
     actions.removeOwner(owner.login);
+    validateSettings();
   };
 
   render() {

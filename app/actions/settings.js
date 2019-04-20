@@ -11,6 +11,10 @@ const params = {
   access_token: {},
 };
 
+export function resetOwnersRepos() {
+  return { type: types.RESET };
+}
+
 export function setToken(data) {
   return { type: types.SET_TOKEN, data };
 }
@@ -89,7 +93,7 @@ export function getUser(token, username) {
  */
 export function getOwner(token, username, owner) {
   params.access_token = token;
-  const requestUrl = `${baseUrl}/orgs/${owner}/memberships/${username}?${urlEncodeData(params)}`;
+  const requestUrl = `${baseUrl}/orgs/${owner.login}/memberships/${username}?${urlEncodeData(params)}`;
   return dispatch => httpGetAsync(requestUrl, (response) => {
     const json = JSON.parse(response || []);
     dispatch(addOwner(json.organization));
@@ -129,7 +133,7 @@ export function getRepo(token, repo, owner) {
  */
 export function getOrgRepos(token, owner) {
   params.access_token = token;
-  const requestUrl = `${baseUrl}/orgs/${owner}/repos?${urlEncodeData(params)}`;
+  const requestUrl = `${baseUrl}/orgs/${owner.login}/repos?${urlEncodeData(params)}`;
   return dispatch => httpGetAsync(requestUrl, (response) => {
     const json = JSON.parse(response || []);
     const isRepoValid = !!json;
@@ -171,8 +175,9 @@ export function getUserRepos(token, username) {
  * @param {any} repo
  * @param {any} owner
  */
-export function validateSettings(token, username, repo, owners) {
+export function validateSettings(token, username, owners) {
   return (dispatch) => {
+    dispatch(resetOwnersRepos());
     owners.every((owner) => {
       dispatch(getOwner(token, username, owner));
       dispatch(getOrgRepos(token, owner));

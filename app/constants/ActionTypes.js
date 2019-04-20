@@ -20,6 +20,7 @@ export const GET_ALL_ISSUES_SUCCESS = 'GET_ALL_ISSUES_SUCCESS';
 export const GET_ISSUES_ERROR = 'GET_ISSUES_ERROR';
 
 
+export const RESET = 'RESET';
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_USERNAME = 'SET_USERNAME';
 export const SET_USER = 'SET_USER';

@@ -16,6 +16,13 @@ const actionsMap = {
   [ActionTypes.GET_REPOS_ERROR](state, action) {
     return Object.assign({}, state, { sync: false, error: action.data, repoList: [] });
   },
+  [ActionTypes.RESET](state, action) {
+    return Object.assign(
+      {},
+      state,
+      { repoList: [] }
+    );
+  },
 };
 
 export default function repo(state = initialState, action) {
