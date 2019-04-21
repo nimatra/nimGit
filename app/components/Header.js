@@ -8,7 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
+import RepoSelect from './RepoSelect';
 import * as Pages from '../constants/Pages';
 import { activePageSelector } from '../selectors/navigation';
 import {
@@ -41,11 +41,11 @@ class Header extends Component {
     this.state = { firstRun: true, selectedRepo: props.activeRepo };
   }
 
-  handleChange = (event) => {
+  handleChange = (repo) => {
     const { actions } = this.props;
-    actions.setActiveRepo(event.target.value);
-    this.setState({ selectedRepo: event.target.value });
-    this.refreshData(event.target.value);
+    actions.setActiveRepo(repo.value);
+    this.setState({ selectedRepo: repo.value });
+    this.refreshData(repo.value);
   };
 
   switchTo = (page) => {
@@ -70,28 +70,14 @@ class Header extends Component {
 
   render() {
     const { activePage, repos } = this.props;
-    const { selectedRepo } = this.state;
     return (
       <div style={{ paddingBottom: '10px', paddingTop: '10px', background: 'white' }}>
-        <form autoComplete="on">
-          <FormControl style={formStyle}>
-            <InputLabel htmlFor="repo-selection">Repo</InputLabel>
-            <Select
-              value={selectedRepo || ''}
-              onChange={this.handleChange}
-              input={<Input id="repo-selection" />}
-              MenuProps={MenuProps}
-            >
-              {repos.map(repo => (
-                repo.id && (
-                  <MenuItem key={repo.id} value={repo.name}>
-                    {repo.name}
-                  </MenuItem>
-                )
-              ))}
-            </Select>
-          </FormControl>
-        </form>
+        <FormControl style={formStyle}>
+          <RepoSelect
+            suggestions={repos.map(repo => ({ label: repo.name, value: repo.name }))}
+            selectRepo={this.handleChange}
+          />
+        </FormControl>
         <BottomNavigation
           showLabels
           value={activePage}
