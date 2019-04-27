@@ -3,6 +3,8 @@
 
 Get nimGit from [Chrome Web Store](https://chrome.google.com/webstore/detail/nkgpdnkngjnnphipjecfihibdjfhocbl)
 
+[Imgur](https://i.imgur.com/d0PxHQZ.png?1)
+
 ## Installation
 
 ```bash
