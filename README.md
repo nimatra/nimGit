@@ -3,7 +3,7 @@
 
 Get nimGit from [Chrome Web Store](https://chrome.google.com/webstore/detail/nkgpdnkngjnnphipjecfihibdjfhocbl)
 
-![alt text](https://i.imgur.com/d0PxHQZ.png?1 "nimGit")
+<img src="https://i.imgur.com/d0PxHQZ.png?1" width="400">
 
 ## Installation
 
