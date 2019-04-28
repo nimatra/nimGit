@@ -16,7 +16,7 @@ const getSettings = createSelector(
 export const getActiveRepo = createSelector(
   activeRepoSelector,
   reposSelector,
-  (activeRepo, repos) => repos.filter(r => r.id === activeRepo)[0]
+  (activeRepo, repos) => repos.filter(r => r.name === activeRepo)[0]
 );
 
 export const getRepo = createSelector(

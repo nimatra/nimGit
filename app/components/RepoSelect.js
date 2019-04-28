@@ -16,6 +16,7 @@ import { emphasize } from '@material-ui/core/styles/colorManipulator';
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    padding: '5px',
   },
   input: {
     display: 'flex',
@@ -168,10 +169,13 @@ const components = {
 };
 
 class RepoSelect extends React.Component {
-  state = {
-    single: null,
-    multi: null,
-  };
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      single: { label: props.activeRepo, value: props.activeRepo },
+      multi: null,
+    };
+  }
 
   handleChange = name => (value) => {
     const { selectRepo } = this.props;
@@ -183,7 +187,7 @@ class RepoSelect extends React.Component {
 
   render() {
     const { classes, theme, suggestions } = this.props;
-
+    const { single } = this.state;
     const selectStyles = {
       input: base => ({
         ...base,
@@ -208,7 +212,7 @@ class RepoSelect extends React.Component {
             }}
             options={suggestions}
             components={components}
-            value={this.state.single}
+            value={single}
             onChange={this.handleChange('single')}
             placeholder="Select Repo"
           />
