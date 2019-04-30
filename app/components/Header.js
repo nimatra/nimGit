@@ -21,12 +21,12 @@ class Header extends Component {
   }
 
   render() {
-    const { activePage, repos } = this.props;
+    const { activePage, token } = this.props;
     return (
       <div style={{ paddingBottom: '10px', paddingTop: '10px', background: 'white' }}>
         <BottomNavigation
           showLabels
-          value={activePage || Pages.PULL_REQUESTS}
+          value={activePage || token ? Pages.PULL_REQUESTS : Pages.SETTINGS}
           onChange={(e, v) => this.switchTo(v)}
           style={{ height: '50px', marginRight: '5px', marginTop: '5px' }}
         >

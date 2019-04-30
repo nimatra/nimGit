@@ -19,7 +19,7 @@ class Page extends Component {
   constructor(props, context) {
     super(props, context);
     const { activeRepo } = props;
-    this.state = { selectedRepo: activeRepo.name };
+    this.state = { selectedRepo: (activeRepo && activeRepo.name) || '' };
   }
 
   handleChange = (repo) => {
